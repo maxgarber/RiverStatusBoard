@@ -1,10 +1,138 @@
-/*	RiverStatusBoard: styles.css
-	more header stuff here later
-	by Max Garber <max.garber+dev@gmail.com>
+/*	
+		TRRA Dashboard
+		by Maxwell Garber <max.garber+dev@gmail.com>
+		styles.css
 */
 
-/*	styles go here…		*/
-/*	remember: use prefix to avoid collision with frameworks		*/
+/*	General Styles */
 
+body {
+	color: white;
+	text-shadow: 0 0 5px #444444;
+	background-color: #4c4c55;
+}
+
+#container-outer {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	
+	width: auto;
+	height: auto;
+		
+	background: linear-gradient(black, #4c4c55);
+}
+
+#container-inner {
+	width: auto;
+	margin-left: 2em;
+	margin-right: 2em;
+	padding-top: 1em;
+}
+
+.colTitle {
+	margin: 1em;
+	padding-bottom: 1em;
+	border-bottom: 2pt solid white;
+}
+
+
+/*	Current ('Now') Styles	*/
+#now-data-container {
+
+}
+
+.now-value-row {
+	line-height: 5em;
+	margin-top: 0.25em;
+	vertical-align: middle;
+}
+
+.now-value-name > span {
+	font-size: 1.5em;
+	font-weight: normal;
+	vertical-align: middle;
+}
+
+.now-value-value > span {
+	font-size: 2em;
+	vertical-align: middle;
+	margin-right: 0.5em;
+}
+
+/*	Current Zone's Styles	*/
+#zone-data-container {
+	height: 26em;
+	line-height: 26em;
+}
+
+#dataField-zone {
+	font-size: 16em;
+	font-weight: normal;
+	padding: 0 0.27em 0 0.27em;
+	background-color: #777777;
+	border-radius: 0.15em;
+	vertical-align: middle;
+}
+
+/*	Current Rules' Styles	*/
+#rules-data-container {
+
+}
+
+.rules-value-row {
+	margin-top: 2em;
+	line-height: 2em;
+	
+}
+
+.rules-value-name {
+	margin-bottom: 1em;
+}
+
+.rules-value-name > span {
+	font-size: 1.25em;
+	
+}
+
+.rules-value-value {
+	font-size: 1.25em;
+	padding-left: 0;
+	
+}
+
+.rules-value-value > span {
+	
+}
+
+/*	Graph styles	*/
+#graph-data-container {
+	/*padding-left: 10em;
+	padding-righ: 10em;*/
+	padding-bottom: 5em;
+}
+#graphCanvas {
+	height: 30em;
+}
+#graphRow {
+	padding-top: 2em;
+}
+
+/*	Display Customization	*/
+
+.label-zone-1 {
+	background-color: #107e02;
+}
+
+#bottom-gutter {
+	height: 5em;
+}
+
+/*	Debugging Styles	*/
+.dashedBorder {
+	border: 1px dashed white;
+}
 
 /* EOF */
