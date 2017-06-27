@@ -73,7 +73,7 @@ var org_openweathermap = {
 	//	api functions
 	getAirTemp: function (setterFunc) {
 		//	1: check if we have data already
-		if (this.cache.data != null) {
+		if (org_openweathermap.cache.data != null) {
 			//	2: if the timestamp is acceptably recent, use it
 			if ( (now - cache.timestamp) < agelimit ){
 				let value = cache.data.THEVALUE;			//TODO: replace with real value
@@ -82,7 +82,7 @@ var org_openweathermap = {
 			}
 		}
 		
-		let asyncContext = this;
+		let asyncContext = org_openweathermap;
 		
 		$.ajax({
 			url: asyncContext.api.url, 
@@ -99,7 +99,7 @@ var org_openweathermap = {
 	
 	getAirSpeed: function (setterFunc) {
 		//	1: check if we have data already
-		if (this.cache.data != null) {
+		if (org_openweathermap.cache.data != null) {
 			//	2: if the timestamp is acceptably recent, use it
 			if ( (now - cache.timestamp) < agelimit ){
 				let value = cache.data.THEVALUE;			//TODO: replace with real value
@@ -108,7 +108,7 @@ var org_openweathermap = {
 			}
 		}
 		
-		let asyncContext = this;
+		let asyncContext = org_openweathermap;
 		
 		$.ajax({
 			url: asyncContext.api.url, 
@@ -125,7 +125,7 @@ var org_openweathermap = {
 	
 	getAirDirxn: function (setterFunc) {
 		//	1: check if we have data already
-		if (this.cache.data != null) {
+		if (org_openweathermap.cache.data != null) {
 			//	2: if the timestamp is acceptably recent, use it
 			if ( (now - cache.timestamp) < agelimit ){
 				let value = cache.data.THEVALUE;			//TODO: replace with real value
@@ -134,7 +134,7 @@ var org_openweathermap = {
 			}
 		}
 		
-		let asyncContext = this;
+		let asyncContext = org_openweathermap;
 		
 		$.ajax({
 			url: asyncContext.api.url, 

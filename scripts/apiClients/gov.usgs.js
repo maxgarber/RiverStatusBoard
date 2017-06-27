@@ -36,7 +36,7 @@ var gov_usgs = {
 	//	api functions
 	getWaterTemp: function (setterFunc) {
 		//	1: check if we have data already
-		if (this.cache.data != null) {
+		if (gov_usgs.cache.data != null) {
 			//	2: if the timestamp is acceptably recent, use it
 			if ( (now - cache.timestamp) < agelimit ){
 				let value = cache.data.THEVALUE;			//TODO: replace with real value
@@ -45,7 +45,7 @@ var gov_usgs = {
 			}
 		}
 		
-		let asyncContext = this;
+		let asyncContext = gov_usgs;
 		
 		$.ajax({
 			url: asyncContext.api.url, 

@@ -3,7 +3,7 @@
 //		by Maxwell B Garber <max.garber+dev@gmail.com>
 //		apiConcierge.js created on 2017-06-26
 
-
+/*
 var usingMockData = false;
 
 var mockData = {
@@ -63,25 +63,48 @@ var getSunset = function (setterFunc) {
 	if (usingMockData) { return mockData.sunset; }
 	return apiClients['sunrise-sunset.org'].getSunset(setterFunc);
 };
+*/
 
 //	Object-Based Version
 
-var APIConcierge = function () {
+var apiConcierge = {
 	
-	this.usingMockData = false;
-	this.clients = clientTable;
+	// skip AJAX requests
+	usingMockData: false,
+	
+	// https-only, i.e. omit openweather requests that violate CSP
+	usingHttpsOnly: true,
+	
+	// for an API domain, which apiClient
+	clientMap: {
+		'weather.gov': gov_weather,
+		'usgs.gov': gov_usgs,
+		'openweather.org': org_openweathermap,
+		'sunrise-sunset.org': org_sunrise_sunset
+	},
+	
+	// for a value, which API domain
+	accessorMap: {
+		'waterFlow': gov_weather.getWaterFlow,
+		'waterLevel': gov_weather.getWaterLevel,
+		'waterTemp': gov_usgs.getWaterTemp,
+		'airTemp': org_openweathermap.getAirTemp,
+		'airSpeed': org_openweathermap.getAirSpeed,
+		'airDirxn': org_openweathermap.getAirDirxn,
+		'sunrise': org_sunrise_sunset.getSunrise,
+		'sunset': org_sunrise_sunset.getSunset
+	},
 	
 	///	getValueAsync
 	/// @param valueID: a unique identifier (string or int) of the value sought
 	/// @param setterFunc: the function to be used to set the value once retrieved
-	this.getValueAsync = function (valueId, setterFunc) {
-		if (this.usingMockData) {					// if using mock data, short circuit
+	getValueAsync: function (valueId, setterFunc) {
+		if (this.usingMockData) {				// if using mock data, short circuit
 			 return mockData[valueId];
-		}	
-		var client = this.clients[valueId];		// select API client based on valueId
-		var getter = client[valueId];			// w/in client, select the getter func
-		getter(setter);							// invoke getter, passing it the setter
-	};
+		}
+		var getter = this.accessorMap[valueId];
+		getter(setterFunc);
+	}
 	
 };
 

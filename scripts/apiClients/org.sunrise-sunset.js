@@ -36,7 +36,7 @@ var org_sunrise_sunset = {
 	//	api functions
 	getSunrise: function (setterFunc) {
 		//	1: check if we have data already
-		if (this.cache.data != null) {
+		if (org_sunrise_sunset.cache.data != null) {
 			//	2: if the timestamp is acceptably recent, use it
 			if ( (now - cache.timestamp) < agelimit ){
 				let value = cache.data.THEVALUE;			//TODO: replace with real value
@@ -45,7 +45,7 @@ var org_sunrise_sunset = {
 			}
 		}
 		
-		let asyncContext = this;
+		let asyncContext = org_sunrise_sunset;
 		
 		$.ajax({
 			url: asyncContext.api.url, 
@@ -62,7 +62,7 @@ var org_sunrise_sunset = {
 	
 	getSunset: function (setterFunc) {
 		//	1: check if we have data already
-		if (this.cache.data != null) {
+		if (org_sunrise_sunset.cache.data != null) {
 			//	2: if the timestamp is acceptably recent, use it
 			if ( (now - cache.timestamp) < agelimit ){
 				let value = cache.data.THEVALUE;			//TODO: replace with real value
@@ -71,7 +71,7 @@ var org_sunrise_sunset = {
 			}
 		}
 		
-		let asyncContext = this;
+		let asyncContext = org_sunrise_sunset;
 		
 		$.ajax({
 			url: asyncContext.api.url, 

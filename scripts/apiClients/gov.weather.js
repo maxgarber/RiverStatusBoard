@@ -32,7 +32,7 @@ var gov_weather = {
 	// api functions
 	getWaterFlow: function (setterFunc) {
 		//	1: check if we have data already
-		if (this.cache.data != null) {
+		if (gov_weather.cache.data != null) {
 			//	2: if the timestamp is acceptably recent, use it
 			if ( (now - cache.timestamp) < agelimit ){
 				let value = cache.data.THEVALUE;			//TODO: replace with real value
@@ -41,7 +41,7 @@ var gov_weather = {
 			}
 		}
 		
-		let asyncContext = this;
+		let asyncContext = gov_weather;
 		
 		$.ajax({
 			url: asyncContext.api.url, 
@@ -68,7 +68,7 @@ var gov_weather = {
 	getWaterLevel: function (setterFunc) {
 		
 		//	1: check if we have data already
-		if (this.cache.data != null) {
+		if (gov_weather.cache.data != null) {
 			//	2: if the timestamp is acceptably recent, use it
 			if ( (now - cache.timestamp) < agelimit ){
 				let value = cache.data.THEVALUE;			//TODO: replace with real value
@@ -77,7 +77,7 @@ var gov_weather = {
 			}
 		}
 		
-		let asyncContext = this;
+		let asyncContext = gov_weather;
 		
 		$.ajax({
 			url: asyncContext.api.url, 
