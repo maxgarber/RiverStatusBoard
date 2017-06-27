@@ -1,7 +1,7 @@
-//	Allegheny River Status: Information for Rowers and Paddlers
-//	Maxwell B Garber <max.garber+dev@gmail.com>
-//	v3.x.y	started on 2017-06-26, updated on YYYY-MM-DD
-//	org.openweathermap.js created on 2017-06-26
+//		RiverStatusBoard: Information for Rowers and Paddlers
+//		Allegheny River information for Three Rivers Rowing Association (TRRA)
+//		by Maxwell B Garber <max.garber+dev@gmail.com>
+//		org.openweathermap.js created on 2017-06-26
 
 
 var org_openweathermap = {
@@ -26,7 +26,7 @@ var org_openweathermap = {
 		//	Kelvin to Celsius
 		var temp_f = (temp_i - 273.15);
 		temp_f = temp_f.toFixed(1);	// single decimal place
-		return ("" + temp_f + " ˚C");
+		return ("" + temp_f /*+ " ˚C"*/);
 	},
 	
 	//	1 mile = 1609.34 m; 1 h = 360 s
@@ -34,7 +34,7 @@ var org_openweathermap = {
 		var mps = Number.parseFloat(speed_i);
 		var mph = (mps * (360/1609.34));
 		var speed_f = mph.toFixed(1);
-		return ("" + speed_f + " mph");
+		return ("" + speed_f /*+ " mph"*/);
 	},
 	
 	//	 E = [0,22]U[338,360]

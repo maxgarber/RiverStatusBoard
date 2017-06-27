@@ -1,7 +1,7 @@
-//	Allegheny River Status: Information for Rowers and Paddlers
-//	Maxwell B Garber <max.garber+dev@gmail.com>
-//	v3.x.y	started on 2017-06-26, updated on YYYY-MM-DD
-//	org.sunrise-sunset.js created on 2017-06-26
+//		RiverStatusBoard: Information for Rowers and Paddlers
+//		Allegheny River information for Three Rivers Rowing Association (TRRA)
+//		by Maxwell B Garber <max.garber+dev@gmail.com>
+//		org.sunrise-sunset.js created on 2017-06-26
 
 //	requirejs(['moment']);		//	<- dependent on momentJS
 

@@ -1,7 +1,7 @@
-//	Allegheny River Status: Information for Rowers and Paddlers
-//	Maxwell B Garber <max.garber+dev@gmail.com>
-//	v3.x.y	started on 2017-06-26, updated on YYYY-MM-DD
-//	gov.weather.js created on 2017-06-26
+//		RiverStatusBoard: Information for Rowers and Paddlers
+//		Allegheny River information for Three Rivers Rowing Association (TRRA)
+//		by Maxwell B Garber <max.garber+dev@gmail.com>
+//		gov.weather.js created on 2017-06-26
 
 
 var gov_weather = {
@@ -56,7 +56,7 @@ var gov_weather = {
 				flowUnits = asyncContext.unitsFormatter('flow', flowUnits);
 				flowValue = asyncContext.valueFormatter('flow', flowValue);
 				
-				let apiData = "" + flowValue + " " + flowUnits;
+				let apiData = "" + flowValue /*+ " " + flowUnits*/;
 				
 				// TODO: update the cached data
 				setterFunc(apiData);
@@ -92,7 +92,7 @@ var gov_weather = {
 				floodUnits = asyncContext.unitsFormatter('level', floodUnits);
 				floodValue = asyncContext.valueFormatter('level', floodValue);
 				
-				let apiData = "" + floodValue + " " + floodUnits;
+				let apiData = "" + floodValue /*+ " " + floodUnits*/;
 				
 				// TODO: update the cached data
 				setterFunc(apiData);

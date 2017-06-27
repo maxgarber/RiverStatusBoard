@@ -1,7 +1,7 @@
-//	Allegheny River Status: Information for Rowers and Paddlers
-//	Maxwell B Garber <max.garber+dev@gmail.com>
-//	v3.x.y	started on 2017-06-26, updated on YYYY-MM-DD
-//	gov.usgs.js created on 2017-06-26
+//		RiverStatusBoard: Information for Rowers and Paddlers
+//		Allegheny River information for Three Rivers Rowing Association (TRRA)
+//		by Maxwell B Garber <max.garber+dev@gmail.com>
+//		gov.usgs.js created on 2017-06-26
 
 
 var gov_usgs = {
@@ -58,7 +58,7 @@ var gov_usgs = {
 				var units = data.value.timeSeries[0].variable.unit.unitCode;
 				units = asyncContext.unitsFormatter(units);
 				
-				let apiData = "" + value + " " + units;
+				let apiData = "" + value /*+ " " + units*/;
 				
 				// TODO: update the cached data
 				setterFunc(apiData);
