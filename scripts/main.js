@@ -1,99 +1,49 @@
-//	
-//		TRRA Dashboard
-//		by Maxwell Garber <max.garber+dev@gmail.com>
-//		main.js
-//
+//	Allegheny River Status: Information for Rowers and Paddlers
+//	Maxwell B Garber <max.garber+dev@gmail.com>
+//	v3.x.y	started on 2017-06-26, updated on YYYY-MM-DD
+//	main.js created on 2017-06-26
 
-//
-//	Utility Functions
-//
-var toFahrenheit = function (temp) {
-	return ( (temp!=null) ? ((temp * (9/5)) + 32) : null );
+//	app object
+var AppViewModel = function () {
+	
+	this.waterFlow = ko.observable('–');
+	this.waterLevel = ko.observable('–');
+	this.waterTemp = ko.observable('–');
+	this.airTemp = ko.observable('–');
+	this.airSpeed = ko.observable('–');
+	this.airDirxn = ko.observable('–');
+	this.sunrise = ko.observable('–');
+	this.sunset = ko.observable('–');
+	
+	this.update = function () {
+		
+		//	Pattern: for given variable, invoke corresponding function declared in conceierge
+		//		pass in the setter method (in this case the observable itself) so it can update
+		//		asynchronously when the API call returns
+		
+		getWaterFlow(this.waterFlow);		
+		getWaterLevel(this.waterLevel);
+		getWaterTemp(this.waterTemp);
+		getAirTemp(this.airTemp);
+		getAirSpeed(this.airSpeed);
+		getAirDirxn(this.airDirxn);
+		getSunrise(this.sunrise);
+		getSunset(this.sunset);
+		
+		return true;
+	};
 };
 
-var toCelsius = function (temp) {
-	return ( (temp!=null) ? ((temp - 32) * (5/9)) : null );
+//	main block - declare before executing
+let main = function () {
+	var viewModel = new AppViewModel();
+	var bindingContext = document.getElementById('koBindingContext');
+	ko.applyBindings(viewModel, bindingContext);
+	window.vm = viewModel;
 };
 
-//	zone-finding
-//	TODO: make this handle >,≥,<,≤ fully -- this will move you down a zone if you're exactly on the demarcation
-var rank = function (value, scale) {
-	var rank = -1;
-	var n = scale.length;
-	for(i = 0; i < n; i++) {
-		if (value >= scale[i]) {
-			rank = i+1;
-		}
-	}
-	if (value >= scale[scale.length-1]) {
-	  rank = scale.length;
-	}
-	return rank;
-};
-
-var clearDataFields = function () {
-	$('#dataField-flow').text(" ");
-	$('#dataField-flood').text(" ");
-	$('#dataField-temp').text(" ");
-	$('#dataField-air').text(" ");
-	$('#dataField-windSpeed').text(" ");
-	$('#dataField-windDirxn').text(" ");
-	$('#dataField-zone').text("–");
-	$("#dataField-boats").text(" ");
-	$("#dataField-coaches").text(" ");
-	$("#dataField-equipment").text(" ");
-	$("#dataField-skill").text(" ");
-};
-
-var displayMockData = function () {
-	clearDataFields();
-	$('#dataField-flow').text("15.3 kcfs");
-	$('#dataField-flood').text("5 ft");
-	$('#dataField-temp').text("22.5 ˚C");
-	$('#dataField-air').text("27 ˚C");
-	$('#dataField-windSpeed').text("3 mph");
-	$('#dataField-windDirxn').text("SE");
-	$('#dataField-zone').text("1");
-	$("#dataField-boats").text("All");
-	$("#dataField-coaches").text("Not a requirement");
-	$("#dataField-equipment").html("optional: PFD<br />recommended: protected cellphone");
-	$("#dataField-skill").text("All levels");
-};
-
-
-//
-//	Main-esque block
-//
-var riverFlow = -1 , riverTemp = -1 , riverFlood= -1 , airTemp= -1 , windSpeed= -1 , windDirxn= -1;
-
+//	call main once page has loaded
 window.onload = function () {
-	setupGraphStructures();
-	clearDataFields();
-	
-	let riverData = getRiverData();
-	let airData = getAirData();
-	
-	$.ajax({
-		url: flowAndFloodSourceURI,
-		data: flowAndFloodParameters,
-		datatype: 'xml',
-		success: function (data) {
-			
-			parseFlowAndFloodData(data);
-			
-			$.ajax({
-				url: temperatureSourceURI,
-				data: temperatureParameters,
-				datatype: 'xml',
-				success: function (data) {
-					
-					parseTemperatureData(data);
-					colorizeDataFields();
-					
-				}
-			});
-		}
-	});
-};
-
+	main();
+}
 // EOF
