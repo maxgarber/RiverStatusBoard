@@ -41,6 +41,7 @@
 		<script src="./scripts/trra-safety.js"></script>
 		
 		<!-- the app itself -->
+		<script src="./scripts/app.js"></script>
 		<script src="./scripts/main.js"></script>
 		
 		<!-- Custom Styles -->
@@ -94,8 +95,9 @@
 										<span data-bind="text: waterLevelUnits"></span>
 									</div>
 								</div>
-							
-								<div class="row now-value-row">
+								
+								
+								<div class="row now-value-row" data-bind="if: airPropertiesEnabled">
 									<div class="col-lg-3 col-md-3 col-sm-3 col-xs-4 text-right now-value-name">
 										<span>Air</span>
 									</div>
@@ -105,7 +107,7 @@
 									</div>
 								</div>
 							
-								<div class="row now-value-row">
+								<div class="row now-value-row" data-bind="if: airPropertiesEnabled">
 									<div class="col-lg-3 col-md-3 col-sm-3 col-xs-4 text-right now-value-name">
 										<span>Wind</span>
 									</div>
@@ -116,12 +118,13 @@
 									</div>
 								</div>
 								
+								
 								<div class="row now-value-row">
 									<div class="col-lg-3 col-md-3 col-sm-3 col-xs-4 text-right now-value-name">
 										<span>Dawn</span>
 									</div>
 									<div class="col-lg-9 col-md-9 col-sm-9 col-xs-8 text-left now-value-value">
-										<span class="label label-default" id="dataField-dawn" data-bind="text: sunrise"></span>
+										<span class="label label-default" id="dataField-dawn" data-bind="text: sunriseText"></span>
 									</div>
 								</div>
 								
@@ -130,7 +133,7 @@
 										<span>Dusk</span>
 									</div>
 									<div class="col-lg-9 col-md-9 col-sm-9 col-xs-8 text-left now-value-value">
-										<span class="label label-default" id="dataField-dusk" data-bind="text: sunset"></span>
+										<span class="label label-default" id="dataField-dusk" data-bind="text: sunsetText"></span>
 									</div>
 								</div>
 								

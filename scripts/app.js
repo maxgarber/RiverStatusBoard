@@ -18,15 +18,34 @@ var AppViewModel = function () {
 	this.waterTemp = ko.observable(this._initString);
 	this.waterTempUnits = ko.observable("˚C");
 	
-	this.airTemp = ko.observable(this._initString);
-	this.airTempUnits = ko.observable("˚C");
+	//	openweathermap-based; conditionally disabled until CSP problem resolved
+	this.airPropertiesEnabled = ko.observable(false);
+	if (this.airPropertiesEnabled()) {
+		this.airTemp = ko.observable(this._initString);
+		this.airTempUnits = ko.observable("˚C");
+		this.airSpeed = ko.observable(this._initString);
+		this.airSpeedUnits = ko.observable("mph");
+		this.airDirxn = ko.observable(this._initString);
+	}
 	
-	this.airSpeed = ko.observable(this._initString);
-	this.airSpeedUnits = ko.observable("mph");
-	
-	this.airDirxn = ko.observable(this._initString);
+	//	these will be moment objects
 	this.sunrise = ko.observable(this._initString);
 	this.sunset = ko.observable(this._initString);
+	//	these will be the text displays
+	this.sunriseText = ko.computed(function () {
+		if (this.sunrise() != this._initString) {
+			return this.sunrise().format('h:mm a');
+		} else {
+			return this._initString;
+		}
+	}, this);
+	this.sunsetText = ko.computed(function () {
+		if (this.sunset() != this._initString) {
+			return this.sunset().format('h:mm a');
+		} else {
+			return this._initString;
+		}
+	}, this);
 	
 	// computed, private
 	this._updated = ko.computed(function () {
@@ -34,9 +53,11 @@ var AppViewModel = function () {
 		updated = updated && !(this.waterFlow() == this._initString);
 		updated = updated && !(this.waterLevel() == this._initString);
 		updated = updated && !(this.waterTemp() == this._initString);
-		updated = updated && !(this.airTemp() == this._initString);
-		updated = updated && !(this.airSpeed() == this._initString);
-		updated = updated && !(this.airDirxn() == this._initString);
+		if (this.airPropertiesEnabled()) {
+			updated = updated && !(this.airTemp() == this._initString);
+			updated = updated && !(this.airSpeed() == this._initString);
+			updated = updated && !(this.airDirxn() == this._initString);
+		}
 		updated = updated && !(this.sunrise() == this._initString);
 		updated = updated && !(this.sunset() == this._initString);
 		return updated;

@@ -3,7 +3,7 @@
 //		by Maxwell B Garber <max.garber+dev@gmail.com>
 //		org.sunrise-sunset.js created on 2017-06-26
 
-//	requirejs(['moment']);		//	<- dependent on momentJS
+//	requirejs(['moment']); ?		//	<- expects moment to be available in the global ns
 
 var org_sunrise_sunset = {
 	
@@ -18,7 +18,7 @@ var org_sunrise_sunset = {
 		params: {
 			lat: 40.466846,
 			lng: -79.976543,
-			date: 'today',
+			date: moment().format('YYYY-MM-DD'),
 			formatted: 0
 		}
 	},
@@ -28,7 +28,7 @@ var org_sunrise_sunset = {
 		var time_f = time_i;
 		if (moment != null) {
 			time_f = moment(time_i);
-			time_f = time_f.format("h:mm a");
+			// time_f = time_f.format("h:mm a");
 		}
 		return time_f;
 	},

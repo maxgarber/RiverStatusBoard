@@ -173,8 +173,18 @@ var trra_safety = {
 		zoneForConditions: function (waterFlow, waterTemp, sunrise, sunset) {
 			let flowZone = rank(waterFlow, this.scales.waterFlow);
 			let tempZone = rank(waterTemp, this.scales.waterTemp);
-			// let daylight = this.daylight(sunrise, sunset);
-			return Math.min(flowZone, tempZone);
+			let zone = Math.min(flowZone, tempZone);
+			
+			// move this into proper place later -> utils.js?	// + TODO: fix sunrise-sunset API yielding sunrise for tomorrow
+			if (moment != null) {
+				var now = moment();
+				var afterDawn = now.isAfter(sunrise);
+				var beforeDusk = now.isBefore(sunset);
+				if ( (afterDawn && beforeDusk) && (zone > 1 && zone < 6) ) {
+					zone -= 1;
+				}
+			}
+			return zone;
 		}
 	},
 	
