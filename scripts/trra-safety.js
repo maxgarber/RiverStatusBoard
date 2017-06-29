@@ -16,7 +16,7 @@ var rank = function (value, scale) {
 			break;
 		}
 	}
-	if (value > scale[scale.zoneCount].max) {
+	if (value > scale.absMax) {
 		//	if we're beyond all defined zones
 		r = scale.zoneCount + 1;
 	}
@@ -26,6 +26,19 @@ var rank = function (value, scale) {
 //	determines if it is currently daylight
 var daylight = function (sunrise, sunset) {
 	// check if sunruse, sunset are moment objects?
+};
+
+var semanticColors = {
+	
+	0: '#ffffff',		//	green-lighter
+	1: '#107e02',		//	green-darker
+	2: '#00dd00',		//	yellow-green
+	3: '#fbff00',		//	yellow
+	4: '#ffda00',		//	orange-yellow/gold
+	5: '#ff9400',		//	red-orange
+	6: '#ff3b00',		//	red-lighter
+	7: '#000000'		//	RED-darker/? 
+	
 };
 
 var trra_safety = {
@@ -60,13 +73,16 @@ var trra_safety = {
 		scales: {
 			
 			waterTemp: {
-				zoneCount: 3,
-				// in ˚C	
-				1: { min: 1.7, max: 4.5 },
-				2: { min: 4.5, max: 10.0 },
-				3: { min: 10.0, max: 50.0 }
-				// upper limit not defined in safety matrix
-				//	but you'd be insane to row when it's >100˚F
+				zoneCount: 4,
+				// in ˚C
+				1: { min: 10.0, max: 50.0 },
+				2: { min: 10.0, max: 50.0 },		// repeating 1 b/c it will break rank() o/w
+				3: { min: 4.5, max: 10.0 },
+				4: { min: -20.0, max: 4.5},
+				// absolute limits not defined in safety matrix
+				//	but you'd be insane to row when it's >100˚F or < 0˚F
+				absMin: -20.0,
+				absMax: 50.0
 			},
 		
 			waterFlow: {
@@ -77,9 +93,11 @@ var trra_safety = {
 				3: { min: 35, max: 40 },
 				4: { min: 40, max: 45 },
 				5: { min: 45, max: 50 },
-				6: { min: 50, max: 60 }
+				6: { min: 50, max: 60 },
 				// lower limit of zone 1 not defined in safety matrix
 				//	but if the river is not flowing you've got other problems
+				absMin: 0,
+				absMax: 60
 			}
 		
 		},
@@ -173,7 +191,7 @@ var trra_safety = {
 		zoneForConditions: function (waterFlow, waterTemp, sunrise, sunset) {
 			let flowZone = rank(waterFlow, this.scales.waterFlow);
 			let tempZone = rank(waterTemp, this.scales.waterTemp);
-			let zone = Math.min(flowZone, tempZone);
+			let zone = Math.max(flowZone, tempZone);
 			
 			// move this into proper place later -> utils.js?	// + TODO: fix sunrise-sunset API yielding sunrise for tomorrow
 			if (moment != null) {
@@ -185,7 +203,24 @@ var trra_safety = {
 				}
 			}
 			return zone;
+		},
+		
+		zoneColorForWaterFlow: function (waterFlow) {
+			let zone = rank(waterFlow, this.scales.waterFlow);
+			let color = semanticColors[zone];
+			return color;
+		},
+		
+		zoneColorForWaterTemp: function (waterTemp) {
+			let zone = rank(waterTemp, this.scales.waterTemp);
+			let color = semanticColors[zone];
+			return color;
+		},
+		
+		zoneColorForZone: function(zone) {
+			return semanticColors[zone];
 		}
+		
 	},
 	
 	//	NOT YET IMPLEMENTED
@@ -202,7 +237,7 @@ var trra_safety = {
 		zoneForConditions: function () {
 			
 		}
-	}
+	},
 
 	
 };

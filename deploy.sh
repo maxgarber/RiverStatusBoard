@@ -1,5 +1,12 @@
 #!/bin/bash
 
+#	Deploy RiverStatusBoard to maxgarber.github.io
+#	- currently just copies over files
+#	- goals for future versions:
+#		+ perform git commit to actually deploy
+#		+ track versions?
+#		+ replace more of deploy commands with variables
+
 PWD=`pwd`
 
 SOURCE="/Users/Max/Developer/GitHub/RiverStatusBoard"

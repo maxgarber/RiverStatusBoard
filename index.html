@@ -71,7 +71,13 @@
 										<span>Flow</span>
 									</div>
 									<div class="col-lg-9 col-md-9 col-sm-9 col-xs-8 text-left now-value-value">
-										<span class="label label-default" id="dataField-flow" data-bind="text: waterFlow"></span>
+										<span class="label label-default" id="dataField-flow" 
+											data-bind="{
+												text: waterFlow,
+												style: {
+													'background-color': waterFlowColor
+												}
+											}"></span>
 										<span data-bind="text: waterFlowUnits"></span>
 									</div>
 								</div>
@@ -81,7 +87,13 @@
 										<span>Temp</span>
 									</div>
 									<div class="col-lg-9 col-md-9 col-sm-9 col-xs-8 text-left now-value-value">
-										<span class="label label-default" id="dataField-temp" data-bind="text: waterTemp"></span>
+										<span class="label label-default" id="dataField-temp"
+											data-bind="{
+												text: waterTemp,
+												style: {
+													'background-color': waterTempColor
+												}
+											}"></span>
 										<span data-bind="text: waterTempUnits"></span>
 									</div>
 								</div>
@@ -95,7 +107,6 @@
 										<span data-bind="text: waterLevelUnits"></span>
 									</div>
 								</div>
-								
 								
 								<div class="row now-value-row" data-bind="if: airPropertiesEnabled">
 									<div class="col-lg-3 col-md-3 col-sm-3 col-xs-4 text-right now-value-name">
@@ -117,7 +128,6 @@
 										<span id="dataField-windDirxn" data-bind="text: airDirxn"></span>
 									</div>
 								</div>
-								
 								
 								<div class="row now-value-row">
 									<div class="col-lg-3 col-md-3 col-sm-3 col-xs-4 text-right now-value-name">
@@ -145,7 +155,14 @@
 						<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 text-center">
 							<h2 class="colTitle">Zone</h2>
 							<div id="zone-data-container">
-								<span class="label label-default" id="dataField-zone" data-bind="text: zone"></span>
+								<span class="label label-default" id="dataField-zone"
+									data-bind="{
+										text: zone,
+										style: {
+											'background-color': zoneColor
+										}
+									}">
+								</span>
 							</div>
 						</div>
 						<!-- END Current Zone Display -->

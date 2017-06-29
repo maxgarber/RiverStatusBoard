@@ -11,12 +11,23 @@ var AppViewModel = function () {
 	// observable, public
 	this.waterFlow = ko.observable(this._initString);
 	this.waterFlowUnits = ko.observable("kcfs");
+	this.waterFlowColor = ko.computed(function () {
+		var color = trra_safety.rowing.zoneColorForWaterFlow(this.waterFlow());
+		return color;
+	}, this);
 	
 	this.waterLevel = ko.observable(this._initString);
 	this.waterLevelUnits = ko.observable("ft");
+	/* this.waterLevelColor = ko.computed(function () {
+		// no scale for flood stage exists
+	}, this); */
 	
 	this.waterTemp = ko.observable(this._initString);
 	this.waterTempUnits = ko.observable("˚C");
+	this.waterTempColor = ko.computed(function () {
+		var color = trra_safety.rowing.zoneColorForWaterTemp(this.waterTemp());
+		return color;
+	}, this);
 	
 	//	openweathermap-based; conditionally disabled until CSP problem resolved
 	this.airPropertiesEnabled = ko.observable(false);
@@ -79,10 +90,18 @@ var AppViewModel = function () {
 		//	don't try to calculate until necessary values fetched
 		if (this._readyToComputeZone()) {
 			//	Declared in trra-safety.js
-			zone = trra_safety.rowing.zoneForConditions(this.waterFlow(), this.waterTemp(), this.sunrise(), this.sunset());
+			zone = trra_safety.rowing.zoneForConditions(
+				this.waterFlow(), this.waterTemp(),
+				this.sunrise(), this.sunset()
+			);
 		}
 		
 		return zone;
+	}, this);
+	
+	this.zoneColor = ko.computed(function () {
+		var color = trra_safety.rowing.zoneColorForZone(this.zone());
+		return color;
 	}, this);
 	
 	// methods, public
