@@ -1,9 +1,13 @@
-//	ColorScales.js
+//	
+//	RiverStatusBoard: Information for Rowers and Paddlers
+//	Allegheny River information for Three Rivers Rowing Association (TRRA)
+//	by Maxwell B Garber <max.garber+dev@gmail.com>
+//	ColorScales.js created on 2017-07-01
+//
+
 
 define("ColorScales", ['MathRanges', 'Utilities'], function (MathRanges, Utilities) {
-	
 	var theModule = {};
-	
 	theModule.meta = {
 		//	VCS & Copyright
 		version: "0.0.1",
@@ -11,6 +15,7 @@ define("ColorScales", ['MathRanges', 'Utilities'], function (MathRanges, Utiliti
 		date: "2017-07-03"
 	};
 	
+	//	Types
 	theModule.Interval = function () {};
 	theModule.Interval.prototype = new MathRanges.Interval();
 	theModule.Interval.prototype.color = "";
@@ -52,12 +57,15 @@ define("ColorScales", ['MathRanges', 'Utilities'], function (MathRanges, Utiliti
 		};
 	};
 	
+	
+	//	Static Methods
 	theModule.createInterval = function (arg) {
 		var interval = new this.Interval();
 		interval.min = arg.min;
 		interval.max = arg.max;
 		interval.includeMin = arg.includeMin;
 		interval.includeMax = arg.includeMax;
+		interval.lable = arg.label;
 		interval.color = arg.color;
 		return interval;
 	};

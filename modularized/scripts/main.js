@@ -1,17 +1,27 @@
-//	main.js
+//
+//	RiverStatusBoard: Information for Rowers and Paddlers
+//	Allegheny River information for Three Rivers Rowing Association (TRRA)
+//	by Maxwell B Garber <max.garber+dev@gmail.com>
+//	main.js created on 2017-06-26
+//
 
+
+//	Globally-accessible configuration parameters
 var globalConfiguration = {
 	debugMode: false,
-	siteVersion: "0.0.1"
+	siteVersion: "0.0.1",
+	serverMode: false		// if true, RiverStatusBoard can respond to messages received from other entities
 };
 window.globalConfiguration = globalConfiguration;
 
-//	log
+
+//	Logging
 if (globalConfiguration.debugMode) {
 	console.log("[LOG] main.js: ✅ loaded main.js successfully");
 }
 
-//	Configure RequireJS
+
+//	RequireJS configuration
 requirejs.config({
 	baseUrl: './scripts',
 	paths: {
@@ -33,7 +43,8 @@ requirejs.config({
 	}
 });
 
-//	load
+
+//	RequireJS module loading & synchronous application start
 require([
 		'jquery', 'knockout', 'moment',
 		'APIConcierge', 'MathRanges', 'TRRASafetyMatrix', 'ColorScales', 'Utilities',

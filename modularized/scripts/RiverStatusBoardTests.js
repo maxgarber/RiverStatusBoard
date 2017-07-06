@@ -9,14 +9,22 @@ define("RiverStatusBoardTests", [
 	RiverStatusBoardApp
 ) {
 	var theModule = {};
-	
 	theModule.meta = {
 		//	VCS & Copyright
 		version: "0.0.1",
 		author: "Maxwell B Garber <max.garber+dev@gmail.com>",
 		date: "2017-07-01"
 	};
+
+	//
+	//	MOVE ALL UNIT TESTS INTO THEIR OWN FILES
+	//		REQUIRE() THEM AND THEN INVOKE THEIR ROUTINES
+	//		ALL UNIT TESTS FILES SHOULD BE IN ./unit-tests/
+	//
+
+	//	Unit tests for MathRanges module
 	
+	//	Unit tests for ColorScales module
 	theModule.ColorScalesTests = {
 		
 		testToString: function () {
@@ -102,6 +110,10 @@ define("RiverStatusBoardTests", [
 		
 	};
 	
+	//	Unit tests for Utilities module
+	//	Unit tests for APIConcierge module
+	//	Unit tests for TRRASafetyMatrix module
+
 	
 	return theModule;
 });
