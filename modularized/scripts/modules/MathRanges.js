@@ -17,9 +17,25 @@ define("MathRanges", ['Utilities'], function (Utilities) {
 		this.includeMin = false;
 		this.includeMax = false;
 		
+		this.containsValue = function (value) {
+			var okByMin;
+			if (this.includeMin) {
+				okByMin = (value >= this.min);
+			} else {
+				okByMin = (value > this.min);
+			}
+			var okByMax;
+			if (this.includeMax) {
+				okByMax = (value <= this.max);
+			} else {
+				okByMax = (value < this.max);
+			}
+			return (okByMin && okByMax);
+		};
+		
 		this.toString = function () {
 			return (this.includeMin ? "[" : "(") + this.min + "," + this.max + (this.includeMax ? "]" : ")");
-		}
+		};
 	};
 	
 	theModule.Range = function () {
@@ -28,12 +44,13 @@ define("MathRanges", ['Utilities'], function (Utilities) {
 		this.toString = function () {
 			var str = "{"; 
 			var nIntervals = this.intervals.length;
-			for(i=0; i<nIntervals; i++) {
+			for(i = 0; i < nIntervals; i++) {
 				str += (i==0 ? "" : ",") + this.intervals[i].toString();
 			}
 			str += "}";
 			return str;
-		}
+		};
+		
 	};
 	
 	return theModule;

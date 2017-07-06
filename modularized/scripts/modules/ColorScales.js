@@ -15,13 +15,62 @@ define("ColorScales", ['MathRanges', 'Utilities'], function (MathRanges, Utiliti
 	theModule.Interval.prototype = new MathRanges.Interval();
 	theModule.Interval.prototype.color = "";
 	theModule.Interval.prototype.toString = function () {
-		return (this.includeMin ? "[" : "(") + this.min + "," + this.max + (this.includeMax ? "]" : ")->" + this.color);
+		var str = (this.includeMin ? "[" : "(");
+		str += this.min + "," + this.max;
+		str += (this.includeMax ? "]" : ")") + "->";
+		str += (this.color == "") ? 'null' : this.color;
+		return str;
 	};
 	
 	theModule.Range = function () {
-		var intervals = [];	
-	};
+		this.intervals = [];
 		
+		this.colorForValue = function (value) {
+			var index = -1;
+			for (i = 0; i < this.intervals.length; i++) {
+				if (this.intervals[i].containsValue(value)) {
+					index = i;
+					break;
+				}
+			}
+			if (index != -1) {
+				return this.intervals[index].color;
+			} else {
+				return "";
+			}
+			
+		};
+		
+		this.toString = function () {
+			var str = "{"; 
+			var nIntervals = this.intervals.length;
+			for(i=0; i<nIntervals; i++) {
+				str += (i==0 ? "" : ",") + this.intervals[i].toString();
+			}
+			str += "}";
+			return str;
+		};
+	};
+	
+	theModule.createInterval = function (arg) {
+		var interval = new this.Interval();
+		interval.min = arg.min;
+		interval.max = arg.max;
+		interval.includeMin = arg.includeMin;
+		interval.includeMax = arg.includeMax;
+		interval.color = arg.color;
+		return interval;
+	};
+	
+	theModule.createScale = function (intervalArray) {
+		var range = new this.Range();
+		for (j = 0; j < intervalArray.length; j++) {
+			// if intervalArray[j].prototype != theModule.Interval.prototype
+			var anInterval = intervalArray[j];
+			range.intervals.push(anInterval);
+		}
+		return range;
+	};
 	
 	return theModule;
 });

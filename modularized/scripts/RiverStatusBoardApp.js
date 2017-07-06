@@ -13,7 +13,12 @@ define("RiverStatusBoardApp", ['jquery', 'knockout', 'moment',
 		date: "2017-07-01",
 		
 		//	Basic fields
-		title: "Allegheny River Conditions"
+		title: "Allegheny River Conditions",
+		
+		//	Methods
+		start: function () {
+			console.log('app started');
+		}
 	};
 		
 	

@@ -129,7 +129,7 @@ require([
 		}
 		
 		//	run unit tests	--	move this to a Node file when ready to start deploying
-		RiverStatusBoardTests.runUnitTests();
+		// RiverStatusBoardTests.runUnitTests();
 		
 		//	start the application
 		RiverStatusBoardApp.start();
