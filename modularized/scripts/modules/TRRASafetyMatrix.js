@@ -47,8 +47,7 @@ define("TRRASafetyMatrix", ['MathRanges'], function (MathRanges) {
 	};
 	
 	theModule.SafetyRules = {
-		RuleTypes = ['ShellType', 'LaunchToShellRatio', 'CoachCertification', 
-						'PFD', 'Communications', 'CrewSkillLevel', 'AdditionalItems'],
+		RuleTypes: ['ShellType', 'LaunchToShellRatio', 'CoachCertification', 'PFD', 'Communications', 'CrewSkillLevel', 'AdditionalItems'],
 		
 		ShellType: {
 			1: 'All boats',

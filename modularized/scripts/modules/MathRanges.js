@@ -1,4 +1,9 @@
-//	MathRanges.js
+//	
+//	RiverStatusBoard: Information for Rowers and Paddlers
+//	Allegheny River information for Three Rivers Rowing Association (TRRA)
+//	by Maxwell B Garber <max.garber+dev@gmail.com>
+//	MathRanges.js created on 2017-07-01
+//
 
 define("MathRanges", ['Utilities'], function (Utilities) {
 	var theModule = {};
@@ -78,7 +83,6 @@ define("MathRanges", ['Utilities'], function (Utilities) {
 		
 	};
 	
-	
 	theModule.createInterval = function (arg) {
 		var interval = new this.Interval();
 		interval.min = arg.min;
@@ -100,6 +104,15 @@ define("MathRanges", ['Utilities'], function (Utilities) {
 			range.intervals.push(anInterval);
 		}
 		return range;
+	};
+	
+	theModule.argTest = function ( { min: a, max: b, includeMin: c, includeMax: d }) {
+		var interval = new this.Interval();
+		interval.min = a;
+		interval.max = b;
+		interval.includeMin = c;
+		interval.includeMax = d;
+		return interval;
 	};
 	
 	
