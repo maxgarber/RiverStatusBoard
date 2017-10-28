@@ -1,8 +1,6 @@
 //	Utilities.js
 
-
-define("Utilities", [], function () {
-	
+var create_module = function () {
 	//	VCS & Copyright
 	var theModule = {}
 	theModule.meta = {
@@ -38,6 +36,21 @@ define("Utilities", [], function () {
 	};
 	
 	return theModule;
-});
+};
+var Utilities = create_module();
+
+//	CommonJS module export
+if (typeof require === 'function') {
+	if (typeof define !== 'function') {
+		// Node.js environment
+		var define = require('amdefine')(module);
+		define([], Utilities);
+	} else {
+		// browser/RequireJS environment
+		define([], Utilities);
+	}
+} else {
+	var Utilities = Utilities();
+}
 
 // EOF

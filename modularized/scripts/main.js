@@ -81,6 +81,7 @@ require([
 			TRRASafetyMatrix: TRRASafetyMatrix,
 			ColorScales: ColorScales,
 			Utilities: Utilities,
+			Settings: Settings,
 			RiverStatusBoardTests: RiverStatusBoardTests,
 			RiverStatusBoardApp: RiverStatusBoardApp
 		};
