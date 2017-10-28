@@ -4,7 +4,8 @@
 define("Utilities", [], function () {
 	
 	//	VCS & Copyright
-	var theModule = {
+	var theModule = {}
+	theModule.meta = {
 		version: "0.0.1",
 		author: "Maxwell B Garber <max.garber+dev@gmail.com>",
 		date: "2017-07-01"

@@ -12,10 +12,14 @@ var debug_settings = {
 
 //	ancillary functions
 var checkModuleLoaded = function (moduleHandle, moduleName, checkFunc) {
-	var success = false;	// not loaded until proven otherwise
-	
+	if (moduleHandle != null) {
+		if (checkFunc()) {
+			return true;
+		}
+	}
+	// what to do with moduleName?
+	return false;
 }
-
 
 //	wrappers
 var debug_tools = {

@@ -8,7 +8,7 @@
 
 //	Globally-accessible configuration parameters
 var globalConfiguration = {
-	debugMode: false,
+	debugMode: true,
 	siteVersion: "0.0.1",
 	serverMode: false		// if true, RiverStatusBoard can respond to messages received from other entities
 };
@@ -39,16 +39,23 @@ requirejs.config({
 		ColorScales: 'modules/ColorScales',
 		Utilities: 'modules/Utilities',
 		
+		//	Settings/Configuration
+		Settings: 'modules/Settings',
+		
 		//	Unit tests & application object
 		RiverStatusBoardTests: 'RiverStatusBoardTests',
 		RiverStatusBoardApp: 'RiverStatusBoardApp'
 	}
 });
 
-
+//	General-purpose utility to validate & log success of loading of a module
 var checkModuleLoaded = function (moduleHandle, moduleIdentifier_string, moduleLoadedCheck_func) {
-	if (moduleHandle != null && moduleLoadedCheck_func()) {
-		console.log('[LOG] main.js: ✅ loaded ' + moduleIdentifier_string + ' successfully');
+	if (moduleHandle != null) {
+		if (moduleLoadedCheck_func()) {
+			console.log('[LOG] main.js: ✅ loaded ' + moduleIdentifier_string + ' successfully');
+		} else {
+			console.log('[LOG] main.js: ❌ ERROR could not load ' + moduleIdentifier_string);
+		}
 	} else {
 		console.log('[LOG] main.js: ❌ ERROR could not load ' + moduleIdentifier_string);
 	}
@@ -58,11 +65,11 @@ var checkModuleLoaded = function (moduleHandle, moduleIdentifier_string, moduleL
 require([
 		'jquery', 'knockout', 'moment',
 		'APIConcierge', 'MathRanges', 'TRRASafetyMatrix', 'ColorScales', 'Utilities',
-		'RiverStatusBoardTests', 'RiverStatusBoardApp'
+		'Settings', 'RiverStatusBoardTests', 'RiverStatusBoardApp'
 	], function (
 		$, ko, moment, 
 		APIConcierge, MathRanges, TRRASafetyMatrix, ColorScales, Utilities,
-		RiverStatusBoardTests, RiverStatusBoardApp
+		Settings, RiverStatusBoardTests, RiverStatusBoardApp
 	) {
 		// to allow global debugging access within browser
 		window.modules = {
@@ -80,71 +87,55 @@ require([
 		
 		//	preliminary loader debugging
 		if (globalConfiguration.debugMode) {
-			var success = true;
 			// check successful loading of each module
+			var success = true;
+			success &= checkModuleLoaded($, 'jQuery', function () {
+				return ($ == jQuery);
+			});
 			
-			if ($ != null && $ == jQuery) {
-				console.log('[LOG] main.js: ✅ loaded jQuery successfully');
-			} else {
-				console.log('[LOG] main.js: ❌ ERROR could not load jQuery');
-				success = false;
-			}
-			if (ko != null && typeof ko.observable == 'function') {
-				console.log('[LOG] main.js: ✅ loaded Knockout successfully');
-			} else {
-				console.log('[LOG] main.js: ❌ ERROR could not load Knockout');
-				success = false;
-			}
-			if (moment != null) {
-				console.log('[LOG] main.js: ✅ loaded Moment successfully');
-			} else {
-				console.log('[LOG] main.js: ❌ ERROR could not load Moment');
-				success = false;
-			}
-			if (APIConcierge != null && APIConcierge.version != "") {
-				console.log('[LOG] main.js: ✅ loaded APIConcierge successfully');
-			} else {
-				console.log('[LOG] main.js: ❌ ERROR could not load APIConcierge');
-				success = false;
-			}
-			if (MathRanges != null && MathRanges.version != "") {
-				console.log('[LOG] main.js: ✅ loaded MathRanges successfully');
-			} else {
-				console.log('[LOG] main.js: ❌ ERROR could not load MathRanges');
-				success = false;
-			}
-			if (TRRASafetyMatrix != null && TRRASafetyMatrix.version != "") {
-				console.log('[LOG] main.js: ✅ loaded TRRASafetyMatrix successfully');
-			} else {
-				console.log('[LOG] main.js: ❌ ERROR could not load TRRASafetyMatrix');
-				success = false;
-			}
-			if (ColorScales != null && ColorScales.version != "") {
-				console.log('[LOG] main.js: ✅ loaded ColorScales successfully');
-			} else {
-				console.log('[LOG] main.js: ❌ ERROR could not load ColorScales');
-				success = false;
-			}
-			if (Utilities != null && Utilities.version != "") {
-				console.log('[LOG] main.js: ✅ loaded Utilities successfully');
-				window.modules.Utilities = Utilities;
-			} else {
-				console.log('[LOG] main.js: ❌ ERROR could not load Utilities');
-				success = false;
-			}
+			success &= checkModuleLoaded(ko, 'Knockout', function () {
+				return (typeof ko.observable == 'function');
+			});
 			
-			if (RiverStatusBoardTests != null) {
-				console.log('[LOG] main.js: ✅ loaded RiverStatusBoardAppTests successfully');
-			} else {
-				console.log('[LOG] main.js: ❌ ERROR could not load RiverStatusBoardTests');
-				success = false;
-			}
-			if (RiverStatusBoardApp != null) {
-				console.log('[LOG] main.js: ✅ loaded RiverStatusBoardApp successfully');
-			} else {
-				console.log('[LOG] main.js: ❌ ERROR could not load RiverStatusBoardApp');
-				success = false;
-			}
+			success &= checkModuleLoaded(moment, "Moment", function () {
+				return true;
+			});
+			
+			success &= checkModuleLoaded(APIConcierge, "APIConcierge", function () {
+				return (APIConcierge.meta.version != "");
+			});
+			
+			success &= checkModuleLoaded(MathRanges, "MathRanges", function () {
+				return (MathRanges.meta.version !== "");
+			});
+			
+			success &= checkModuleLoaded(TRRASafetyMatrix, "TRRASafetymatrix", function () {
+				return (TRRASafetyMatrix.meta.version != "");
+			});
+			
+			success &= checkModuleLoaded(ColorScales, "ColorScales", function () {
+				return (ColorScales.meta.version != "");
+			});
+			
+			success &= checkModuleLoaded(Utilities, "Utilities", function () {
+				return (Utilities.meta.version != "");
+			});
+			
+			//																							//
+			//——————————————————————————————————————————————————————————————————————————————————————————//
+			//																							//
+			
+			success &= checkModuleLoaded(Settings, "Settings", function () {
+				return (Settings.meta.version != "");
+			});
+			
+			success &= checkModuleLoaded(RiverStatusBoardTests, "RiverStatusBoardTests", function () {
+				return (RiverStatusBoardTests.meta.version != "");
+			});
+			
+			success &= checkModuleLoaded(RiverStatusBoardApp, "RiverStatusBoardApp", function () {
+				return (RiverStatusBoardApp.meta.version != "");
+			});
 			
 			console.log('[LOG] main.js: ' + 
 				(success ? '✅ loaded required modules' : '❌ ERROR could not load all required modules')
