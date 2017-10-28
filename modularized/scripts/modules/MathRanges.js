@@ -5,6 +5,10 @@
 //	MathRanges.js created on 2017-07-01
 //
 
+if (typeof define !== 'function') {
+    var define = require('amdefine')(module);
+}
+
 define("MathRanges", ['Utilities'], function (Utilities) {
 	var theModule = {};
 	theModule.meta = {

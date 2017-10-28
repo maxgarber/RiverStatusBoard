@@ -30,6 +30,8 @@ requirejs.config({
 		knockout: 'libraries/knockout-3.4.2',
 		moment: 'libraries/moment-2.18.1.min',
 		
+		//	Who would a '2nd party' be?
+		
 		//	Modules -- 1st party scripts
 		APIConcierge: 'modules/APIConcierge/APIConcierge',
 		MathRanges: 'modules/MathRanges',
@@ -43,6 +45,14 @@ requirejs.config({
 	}
 });
 
+
+var checkModuleLoaded = function (moduleHandle, moduleIdentifier_string, moduleLoadedCheck_func) {
+	if (moduleHandle != null && moduleLoadedCheck_func()) {
+		console.log('[LOG] main.js: ✅ loaded ' + moduleIdentifier_string + ' successfully');
+	} else {
+		console.log('[LOG] main.js: ❌ ERROR could not load ' + moduleIdentifier_string);
+	}
+}
 
 //	RequireJS module loading & synchronous application start
 require([
@@ -71,8 +81,10 @@ require([
 		//	preliminary loader debugging
 		if (globalConfiguration.debugMode) {
 			var success = true;
+			// check successful loading of each module
+			
 			if ($ != null && $ == jQuery) {
-				console.log('[LOG] main.js: ✅ loaded jQuery successfully')
+				console.log('[LOG] main.js: ✅ loaded jQuery successfully');
 			} else {
 				console.log('[LOG] main.js: ❌ ERROR could not load jQuery');
 				success = false;
