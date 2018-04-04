@@ -8,7 +8,7 @@
 
 //	rank returns the zone for a value, given a scale
 // TODO: add parameters for L/R inclusivity -- and/or make interval dependent
-var rank = function (value, scale) {
+let rank = function (value, scale) {
 	var r = 0;	// initialize at invalid/below all zones
 	for (z = 1; z <= scale.zoneCount; z++) {
 		if ( value >= scale[z].min && value <= scale[z].max ) {
@@ -24,20 +24,19 @@ var rank = function (value, scale) {
 };
 
 //	determines if it is currently daylight
-var daylight = function (sunrise, sunset) {
+let daylight = function (sunrise, sunset) {
 	// check if sunruse, sunset are moment objects?
 };
 
-var semanticColors = {
+let semanticColors = {
 	
-	0: '#ffffff',		//	green-lighter
-	1: '#107e02',		//	green-darker
-	2: '#00dd00',		//	yellow-green
-	3: '#fbff00',		//	yellow
-	4: '#ffda00',		//	orange-yellow/gold
-	5: '#ff9400',		//	red-orange
-	6: '#ff3b00',		//	red-lighter
-	7: '#000000'		//	RED-darker/? 
+	1: '#00c020',		//	green
+	2: '#40fe00',		//	bright green
+	3: '#c8ff00',		//	yellow
+	4: '#ffff00',		//	orange-yellow
+	5: '#ffa800',		//	orange
+	6: '#ff0000',		//	red
+	7: '#000000'		//	black 
 	
 };
 
@@ -119,28 +118,28 @@ var trra_safety = {
 			launchToShellRatio: {
 				1: "Not a requirement",
 				2: "Not a requirement unless rowing in Zone 3 daylight conditions when Zone 3 requirements should be followed",
-				3: "1 launch to 2 shells (shells of equal speed)",
-				4: "1 launch to 2 shells (shells of equal speed)",
-				5: "1 to 1",
+				3: "1 launch per 2 shells (of equal speed)",
+				4: "1 launch per 2 shells (of equal speed)",
+				5: "1 launch per shell",
 				6: "Sufficient launches to (a) carry all rowers and coxes participating in session, and (b) have at least 2 engines as between all launches on the water (towing line required)"
 			},
 		
 			coachCertification: {
-				1: "Not a requirement",
-				2: "Not a requirement",
-				3: "USRA Level 2",
-				4: "USRA Level 2",
-				5: "USRA Level 2",
-				6: "USRA Level 2"
+				1: "No certification level required",
+				2: "No certification level required",
+				3: "USRA Level 2+ certification",
+				4: "USRA Level 2+ certification",
+				5: "USRA Level 2+ certification",
+				6: "USRA Level 2+ certification"
 			},
 		
 			pfdRequirement: {
-				1: "Optional",
-				2: "Optional",
-				3: "Optional",
-				4: "Worn by all rowers and coxswains",
-				5: "Worn by all rowers and coxswains",
-				6: "Worn by all rowers and coxswains"
+				1: "PFDs Optional",
+				2: "PFDs Optional",
+				3: "PFDs Optional",
+				4: "PFDs on all rowers & coxswains",
+				5: "PFDs on all rowers & coxswains",
+				6: "PFDs on all rowers & coxswains"
 			},
 		
 			commRequirement: {

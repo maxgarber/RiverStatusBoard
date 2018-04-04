@@ -37,9 +37,9 @@ body {
 
 #container-inner {
 	width: auto;
-	margin-left: 2em;
-	margin-right: 2em;
-	padding-top: 1em;
+	margin-left: 0.5em;
+	margin-right: 0.5em;
+	padding-top: 0.5em;
 }
 
 .colTitle {
@@ -60,16 +60,26 @@ body {
 	vertical-align: middle;
 }
 
-.now-value-name > span {
+.now-value-name span {
 	font-size: 1.5em;
 	font-weight: normal;
 	vertical-align: middle;
 }
 
-.now-value-value > span {
+.now-value-value span {
 	font-size: 2em;
 	vertical-align: middle;
-	margin-right: 0.5em;
+	padding-left: 0.3em;
+	padding-right: 0.3em;
+	margin-right: 0;
+	text-shadow 0 0 0.1em black;
+}
+
+span.now-value-units {
+	margin-left: 0;
+	margin-right: 0;
+	font-size: 1.5em;
+	font-weight: normal;
 }
 
 /*	Current Zone's Styles	*/
@@ -112,7 +122,7 @@ body {
 }
 
 .rules-value-value > span {
-	
+	color: white;
 }
 
 /*	Graph styles	*/
@@ -120,7 +130,7 @@ body {
 	padding-bottom: 5em;
 }
 #graphCanvas {
-	height: 30em;
+	height: 15em;
 }
 #graphRow {
 	padding-top: 2em;
@@ -129,8 +139,14 @@ body {
 /*	Display Customization	*/
 
 .label-zone-1 {
-	background-color: #107e02;
+	/* background-color: #107e02; */
 }
+
+#attribution {
+	color: #666666;
+	font-weight: thin;
+}
+
 
 #bottom-gutter {
 	height: 5em;

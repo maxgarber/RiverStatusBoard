@@ -13,14 +13,14 @@ var gov_usgs = {
 	},
 	
 	api: {
-		url: 'https://waterservices.usgs.gov/nwis/iv/',
+		url: 'https://waterservices.usgs.gov/nwis/iv',
 		params: {
 			format: 'json',			// 'waterml,2.0' is old style
 			sites: '03049640',
 			parameterCd: '00010',
-			siteStatus: 'all'
-			// startDT: '',			// need to restore for timeseries fetch
-			// endDT: ''
+			siteStatus: 'all'/*,
+			startDT: '',			// need to restore for timeseries fetch
+			endDT: '' */
 		}
 	},
 	

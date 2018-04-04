@@ -29,6 +29,8 @@
 		<script src="./scripts/libs/moment-2.18.1.min.js"></script>
 		<!-- Knockout -->
 		<script src="./scripts/libs/knockout-3.4.2.js"></script>
+		<!-- Chart -->
+		<script src="./scripts/libs/Chart-2.6.0.min.js"></script>
 		
 		<!-- custom API management scheme -->
 		<script src="./scripts/apiClients/gov.weather.js"></script>
@@ -43,6 +45,7 @@
 		<!-- the app itself -->
 		<script src="./scripts/app.js"></script>
 		<script src="./scripts/main.js"></script>
+		<script src="./scripts/graph.js"></script>
 		
 		<!-- Custom Styles -->
 		<link rel="stylesheet" type="text/css" href="./styles.css">
@@ -59,18 +62,28 @@
 		<div id="container-outer">
 			<div id="container-inner">
 				<div class="container-fluid center-block">
-					<center><h1 class="h1-custom">Allegheny River Conditions</h1></center>
-					<div class="row">
 					
+					<!-- BEGIN Title Row -->
+					<div class="row">
+						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
+							<h1 class="h1-custom">Allegheny River Conditions</h1>
+						</div>
+					</div>
+					<!-- END Title Row -->
+					
+					<!--  BEGIN Current Conditions & Rules Row -->
+					<div class="row">
+						
 						<!-- BEGIN Current Values Table -->
 						<div class="col-lg-4 col-md-8 col-sm-12 col-xs-12 text-center">
 							<h2 class="colTitle">Now</h2>
 							<div id="now-data-container" class="container-fluid">
+								
 								<div class="row now-value-row">
-									<div class="col-lg-3 col-md-3 col-sm-3 col-xs-4 text-right now-value-name">
+									<div class="col-lg-4 col-md-4 col-sm-3 col-xs-4 text-right now-value-name">
 										<span>Flow</span>
 									</div>
-									<div class="col-lg-9 col-md-9 col-sm-9 col-xs-8 text-left now-value-value">
+									<div class="col-lg-8 col-md-8 col-sm-9 col-xs-8 text-left now-value-value">
 										<span class="label label-default" id="dataField-flow" 
 											data-bind="{
 												text: waterFlow,
@@ -78,71 +91,85 @@
 													'background-color': waterFlowColor
 												}
 											}"></span>
-										<span data-bind="text: waterFlowUnits"></span>
+										<span class="now-value-units" data-bind="text: waterFlowUnits"></span>
 									</div>
 								</div>
 							
 								<div class="row now-value-row">
-									<div class="col-lg-3 col-md-3 col-sm-3 col-xs-4 text-right now-value-name">
-										<span>Temp</span>
+									<div class="col-lg-4 col-md-4 col-sm-3 col-xs-4 text-right now-value-name">
+										<span>Water</span>
 									</div>
-									<div class="col-lg-9 col-md-9 col-sm-9 col-xs-8 text-left now-value-value">
+									<div class="col-lg-8 col-md-8 col-sm-9 col-xs-8 text-left now-value-value">
+										<div style="display: inline-block;">
 										<span class="label label-default" id="dataField-temp"
 											data-bind="{
 												text: waterTemp,
 												style: {
 													'background-color': waterTempColor
 												}
-											}"></span>
-										<span data-bind="text: waterTempUnits"></span>
+											}">
+										</span>
+										<span class="now-value-units" data-bind="text: waterTempUnits"></span>
+										</div>
+										<div style="display: inline-block;">
+											<span class="label label-default" id="dataField-temp"
+												data-bind="{
+													text: waterTempF,
+													style: {
+														'background-color': waterTempColor
+													}
+												}">
+											</span>
+											<span class="now-value-units">˚F</span>
+										</div>
 									</div>
 								</div>
 							
 								<div class="row now-value-row">
-									<div class="col-lg-3 col-md-3 col-sm-3 col-xs-4 text-right now-value-name">
-										<span>Flood</span>
+									<div class="col-lg-4 col-md-4 col-sm-3 col-xs-4 text-right now-value-name">
+										<span>Gauge</span>
 									</div>
-									<div class="col-lg-9 col-md-9 col-sm-9 col-xs-8 text-left now-value-value">
+									<div class="col-lg-8 col-md-8 col-sm-9 col-xs-8 text-left now-value-value">
 										<span class="label label-default" id="dataField-flood" data-bind="text: waterLevel"></span>
-										<span data-bind="text: waterLevelUnits"></span>
+										<span class="now-value-units" data-bind="text: waterLevelUnits"></span>
 									</div>
 								</div>
 								
 								<div class="row now-value-row" data-bind="if: airPropertiesEnabled">
-									<div class="col-lg-3 col-md-3 col-sm-3 col-xs-4 text-right now-value-name">
+									<div class="col-lg-4 col-md-4 col-sm-3 col-xs-3 text-right now-value-name">
 										<span>Air</span>
 									</div>
-									<div class="col-lg-9 col-md-9 col-sm-9 col-xs-8 text-left now-value-value">
+									<div class="col-lg-8 col-md-8 col-sm-9 col-xs-9 text-left now-value-value">
 										<span class="label label-default" id="dataField-air" data-bind="text: airTemp"></span>
-										<span data-bind="text: airTempUnits"></span>
+										<span class="now-value-units" data-bind="text: airTempUnits"></span>
 									</div>
 								</div>
 							
 								<div class="row now-value-row" data-bind="if: airPropertiesEnabled">
-									<div class="col-lg-3 col-md-3 col-sm-3 col-xs-4 text-right now-value-name">
+									<div class="col-lg-4 col-md-4 col-sm-3 col-xs-3 text-right now-value-name">
 										<span>Wind</span>
 									</div>
-									<div class="col-lg-9 col-md-9 col-sm-9 col-xs-8 text-left now-value-value">
+									<div class="col-lg-8 col-md-8 col-sm-9 col-xs-9 text-left now-value-value">
 										<span class="label label-default" id="dataField-windSpeed" data-bind="text: airSpeed"></span>
-										<span data-bind="text: airSpeedUnits"></span>
+										<span class="now-value-units" data-bind="text: airSpeedUnits"></span>
 										<span id="dataField-windDirxn" data-bind="text: airDirxn"></span>
 									</div>
 								</div>
 								
 								<div class="row now-value-row">
-									<div class="col-lg-3 col-md-3 col-sm-3 col-xs-4 text-right now-value-name">
-										<span>Dawn</span>
+									<div class="col-lg-4 col-md-4 col-sm-3 col-xs-4 text-right now-value-name">
+										<span>Sunrise</span>
 									</div>
-									<div class="col-lg-9 col-md-9 col-sm-9 col-xs-8 text-left now-value-value">
+									<div class="col-lg-8 col-md-8 col-sm-9 col-xs-8 text-left now-value-value">
 										<span class="label label-default" id="dataField-dawn" data-bind="text: sunriseText"></span>
 									</div>
 								</div>
 								
 								<div class="row now-value-row">
-									<div class="col-lg-3 col-md-3 col-sm-3 col-xs-4 text-right now-value-name">
-										<span>Dusk</span>
+									<div class="col-lg-4 col-md-4 col-sm-3 col-xs-4 text-right now-value-name">
+										<span>Sunset</span>
 									</div>
-									<div class="col-lg-9 col-md-9 col-sm-9 col-xs-8 text-left now-value-value">
+									<div class="col-lg-8 col-md-8 col-sm-9 col-xs-8 text-left now-value-value">
 										<span class="label label-default" id="dataField-dusk" data-bind="text: sunsetText"></span>
 									</div>
 								</div>
@@ -158,9 +185,7 @@
 								<span class="label label-default" id="dataField-zone"
 									data-bind="{
 										text: zone,
-										style: {
-											'background-color': zoneColor
-										}
+										style: { 'background-color': zoneColor }
 									}">
 								</span>
 							</div>
@@ -173,34 +198,44 @@
 							<div class="container-fluid" id="rules-data-container">
 								<div class="row rules-value-row">
 									<div class="col-lg-5 col-md-2 col-sm-3 col-xs-1 text-right rules-value-name">
-										<span class="label label-default">Boats</span>
+										<span class="label label-info">Shell Types</span>
 									</div>
 									<div class="col-lg-7 col-md-10 col-sm-9 col-xs-12 col-md-offset-0 col-sm-offset-0 col-xs-offset-1 text-left rules-value-value">
-										<span id="dataField-boats"></span>
+										<span id="dataField-shells" data-bind="text:shellTypes"></span>
 									</div>
 								</div>
 								<div class="row rules-value-row">
 									<div class="col-lg-5 col-md-2 col-sm-3 col-xs-1 text-right rules-value-name">
-										<span class="label label-default">Coaches</span>
+										<span class="label label-info">Skill Level</span>
 									</div>
 									<div class="col-lg-7 col-md-10 col-sm-9 col-xs-12 col-md-offset-0 col-sm-offset-0 col-xs-offset-1 text-left rules-value-value">
-										<span id="dataField-coaches"></span>
+										<span id="dataField-skill"  data-bind="text:crewSkill"></span>
 									</div>
 								</div>
 								<div class="row rules-value-row">
 									<div class="col-lg-5 col-md-2 col-sm-3 col-xs-1 text-right rules-value-name">
-										<span class="label label-default">Equipment</span>
+										<span class="label label-info">Launches</span>
 									</div>
 									<div class="col-lg-7 col-md-10 col-sm-9 col-xs-12 col-md-offset-0 col-sm-offset-0 col-xs-offset-1 text-left rules-value-value">
-										<span id="dataField-equipment"></span>
+										<span id="dataField-launches" data-bind="text:launchRatio"></span>
 									</div>
 								</div>
 								<div class="row rules-value-row">
 									<div class="col-lg-5 col-md-2 col-sm-3 col-xs-1 text-right rules-value-name">
-										<span class="label label-default">Skill</span>
+										<span class="label label-info">Coaches</span>
 									</div>
 									<div class="col-lg-7 col-md-10 col-sm-9 col-xs-12 col-md-offset-0 col-sm-offset-0 col-xs-offset-1 text-left rules-value-value">
-										<span id="dataField-skill"></span>
+										<span id="dataField-coaches" data-bind="text:coachCert"></span>
+									</div>
+								</div>
+								<div class="row rules-value-row">
+									<div class="col-lg-5 col-md-2 col-sm-3 col-xs-1 text-right rules-value-name">
+										<span class="label label-info">Safety Gear</span>
+									</div>
+									<div class="col-lg-7 col-md-10 col-sm-9 col-xs-12 col-md-offset-0 col-sm-offset-0 col-xs-offset-1 text-left rules-value-value">
+										<span id="dataField-pdfReq" data-bind="text:pfdReq"></span><br />
+										<span id="dataField-commsEquip"  data-bind="text:commsEquip"></span><br />
+										<span id="dataField-skill"  data-bind="text:additionalSafety"></span>
 									</div>
 								</div>
 								<div class="row rules-value-row">&nbsp;</div>
@@ -208,18 +243,45 @@
 						</div>
 						<!-- END Safety Values Table -->
 					</div>
-					<div class="row center-block">
-						<!-- 
-						BEGIN Recent Values 
+					<!--  END Current Conditions & Rules Row -->
+					
+					<!-- BEGIN Recent Conditions Graph Row -->
+					<div class="row center-block" data-bind="visible: graphEnabled">
 						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center" id="graphRow">
-							<h2 class="colTitle">Recent</h2>
+							<h2 class="colTitle">Recent Conditions</h2>
 							<div class="graph-data-container">
 								<canvas id="graphCanvas"></canvas>
 							</div>
 						</div>
-						END Recent Values
-						-->
 					</div>
+					<!-- END Recent Conditions Graph Row -->
+					
+					<div class="row">
+						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
+							<h1 class="h1-custom"></h1>
+						</div>
+					</div>
+					
+					<!-- BEGIN Data attribution row -->
+					<div class="row center-block" id="attribution">
+						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-left">
+							<h4>Data provided by:</h4>
+							<span>USGS WaterData</span>
+							<span>NOAA Water Conditions</span>
+							<span>Sunrise-Sunset API</span>
+							<span>Three Rivers Rowing Assocation</span>
+						</div>
+						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-left">
+							<h4>Site built with:</h4>
+							<span>Bootstrap, jQuery, Moment, Knockout, &amp; RequireJS</span><br />
+							<br />
+							<span>©2018 Maxwell Garber.</span>
+							<span>This site is intended for use only by staff, members, and guests of Three Rivers Rowing Association.</span><br />
+							<span>It is not intended to be a substitute for evaluating safety conditions using good judgement, and therefore assumes no liability if you do something stupid and/or dangerous.</span>
+						</div>
+					</div>
+					<!-- END Data attribution row -->
+					
 					<div id="bottom-gutter">&nbsp;</div>
 				</div>
 			</div>

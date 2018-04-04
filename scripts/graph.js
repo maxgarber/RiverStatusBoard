@@ -28,10 +28,37 @@ var graphCanvas = null;
 var graphSettings = {};
 var theGraph;
 
+let plotColors = {
+	flow: '#0088ff',
+	flood: '#00ff00',
+	temperature: '#ff0000'
+};
+
+let selectors = {
+	graphCanvas: '#graphCanvas',
+	currentFlow: '#flow',
+	currentFlood: '#flood',
+	currentTemp: '#temp'
+};
+
+let flowAndFloodSourceURI = "https://water.weather.gov/ahps2/hydrograph_to_xml.php?gage=shrp1&output=xml";
+let temperatureSourceURI = "https://waterservices.usgs.gov/nwis/iv/";
+let flowAndFloodParameters = {
+	gage: 'shrp1',
+	output: 'xml'
+};
+
+let temperatureParameters = {
+	format: 'waterml,2.0',
+	sites: '03049640',
+	startDT: '',		// literal example '2017-04-12T15:00-0000'	@NOTE these get overwritten in flow/flood callback
+	endDT: '',			// literal example '2017-04-14T01:30-0000'
+	parameterCd: '00010',
+	siteStatus: 'all'
+};
 
 
-
-// Formatters
+// Formatters/Utilities
 var tickFormatter = function (value, index, values, type) {	
 	if (type == "flow") {
 		console.log("got value: "+value);
@@ -41,6 +68,13 @@ var tickFormatter = function (value, index, values, type) {
 		return value.toString();
 	}	
 }
+
+var toFahrenheit = function (temp) {
+	return ( (temp!=null) ? ((temp * (9/5)) + 32) : null );
+};
+var toCelsius = function (temp) {
+	return ( (temp!=null) ? ((temp - 32) * (5/9)) : null );
+};
 
 //	Graph Functions
 var setupGraphStructures = function () {
@@ -52,7 +86,7 @@ var setupGraphStructures = function () {
 		gridLines: { 
 			display: true,
 			color: '#ffffff',
-			lineWidth: 0.5,
+			lineWidth: 1,
 			borderDash: [5,2],
 			zeroLineWidth: 1,
 			zeroLineColor: '#ffffff'
@@ -70,9 +104,9 @@ var setupGraphStructures = function () {
 	yAxis_flow = {
 		id: "yAxis_flow",
 		type: "logarithmic",
-		position: "left",
+		position: "right",
 		display: true,
-		gridLines: { display: true },
+		gridLines: { display: false },
 		ticks: {
 			callback: function (label, index, labels) {
 				return label+"k";
@@ -85,7 +119,7 @@ var setupGraphStructures = function () {
 			labelString: "Flow Rate (cfs)",
 			fontColor: plotColors.flow,
 			fontSize: 14
-		}
+		},
 	}
 	yAxis_flood = {
 		id: "yAxis_flood",
@@ -93,7 +127,8 @@ var setupGraphStructures = function () {
 		position: "left",
 		gridLines: { display: false },
 		ticks: {
-			min: 0,
+			min: 5,
+			max: 20
 		},
 		scaleLabel: {
 			display: true,
@@ -105,7 +140,7 @@ var setupGraphStructures = function () {
 	yAxis_temp = {
 		id: "yAxis_temp",
 		type: "linear",
-		position: "right",
+		position: "left",
 		gridLines: { display: false },
 		ticks: {
 			min: 0,
@@ -120,11 +155,12 @@ var setupGraphStructures = function () {
 			labelString: "Water Temperature (˚C)",
 			fontColor: plotColors.temperature,
 			fontSize: 14
-		}
+		},
+		color: plotColors.temp
 	};
 	graphScale = {
 		xAxes: [xAxis],
-		yAxes: [yAxis_flood, yAxis_flow, yAxis_temp]
+		yAxes: [yAxis_flow, yAxis_temp, yAxis_flood]
 	};
 	
 	// dataset wrapping
@@ -169,7 +205,7 @@ var setupGraphStructures = function () {
 		hidden: false,
 		maintainAspectRatio: false
 	};
-	graphCanvas = $(graphCanvasSelector).get(0);
+	graphCanvas = $(selectors.graphCanvas).get(0);
 	graphSettings = {
 		type: "line",
 		data: graphData,
@@ -204,7 +240,7 @@ var parseFlowAndFloodData = function (data) {
 	var observedDataN = observedData.length;
 	var forecastData = $(data).find('site > forecast > datum');
 	var forecastDataN = forecastData.length;
-	for(i = 0; i < observedDataN; i += dataDownsampleFactor) {
+	for(i = 0; i < observedDataN; i++) {
 		var datum = $(observedData).get(i);
 		var datetime = $(datum).children('valid').text();
 		datetime = datetime.substr(0,16);
@@ -216,15 +252,17 @@ var parseFlowAndFloodData = function (data) {
 		ordinates.observed.flood[i] = Number.parseFloat(flood);
 		ordinates.observed.flow[i] = Number.parseFloat(flow);
 	}
-	for(i = 0; i < forecastDataN; i += dataDownsampleFactor) {
+	moments.forecast = [];
+	abscissa.forecast = [];
+	for(i = 0; i < forecastDataN; i++) {
 		var datum = $(forecastData).get(i);
 		var datetime = $(datum).children('valid').text();
 		datetime = datetime.substr(0,16);
 		var flood = $(datum).children('primary').text();
 		var flow = $(datum).children('secondary').text();
 		var aMoment = moment(datetime);
-		moments.forecast[i] = aMoment;
-		abscissa.forecast[i] = datetime;
+		moments.forecast.push(aMoment);
+		abscissa.forecast.push(datetime);
 		ordinates.forecast.flood[i] = Number.parseFloat(flood);
 		ordinates.forecast.flood[i] = Number.parseFloat(flow);
 	}
@@ -232,7 +270,9 @@ var parseFlowAndFloodData = function (data) {
 	var obsmax = moment.max(moments.observed);
 	var tempReqFormat = "YYYY-MM-DDTHH:mm-0000";
 	temperatureParameters.startDT = obsmin.format(tempReqFormat);
-	temperatureParameters.endDT = obsmax.format(tempReqFormat);	
+	// temperatureParameters.startDT = moment().subtract(36, 'hours').format(tempReqFormat);
+	temperatureParameters.endDT = obsmax.format(tempReqFormat);
+	// temperatureParameters.endDT = moment().format(tempReqFormat);
 };
 
 var parseTemperatureData = function (data) {
@@ -246,11 +286,35 @@ var parseTemperatureData = function (data) {
 	// extract timeseries data
 	var observedData = $(data.documentElement).children('wml2\\:observationMember').find('wml2\\:point')
 	var observedDataN = observedData.length;
-	for(i = 0; i < observedDataN; i += dataDownsampleFactor) {
+	for(i = 0; i < observedDataN; i++) {
 		var datum = $(observedData).get(i);
 		var datetime = $(datum).find('wml2\\:time').text();
 		var temp = $(datum).find('wml2\\:value').text();
 		ordinates.observed.temp[i] = Number.parseFloat(temp);
 	}
+	
+	// here: intervene to remove all data in flow and flood from before first temperature reading
+	
 	renderGraph();
+};
+
+var populateDataSets = function () {
+	$.ajax({
+		url: flowAndFloodSourceURI,
+		data: flowAndFloodParameters,
+		datatype: 'xml',
+		success: function (data) {
+			parseFlowAndFloodData(data);
+			// hard-chain start
+			$.ajax({
+				url: temperatureSourceURI,
+				data: temperatureParameters,
+				datatype: 'xml',
+				success: function (data) {
+					parseTemperatureData(data);
+				}
+			});
+			// hard-chain end
+		}
+	});
 };

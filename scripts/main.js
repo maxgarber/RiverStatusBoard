@@ -5,12 +5,22 @@
 
 //	make requirejs calls here
 
+
+//	dev/debug stuff here
+let devMode = false;
+
 //	main block - declare before executing
 let main = function () {
 	var viewModel = new AppViewModel();
 	var bindingContext = document.getElementById('koBindingContext');
 	ko.applyBindings(viewModel, bindingContext);
 	window.vm = viewModel;
+	
+	if (viewModel.graphEnabled()) {
+		setupGraphStructures();
+		populateDataSets();
+		renderGraph();
+	}
 };
 
 //	call main once page has loaded

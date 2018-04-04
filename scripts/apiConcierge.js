@@ -3,10 +3,7 @@
 //		by Maxwell B Garber <max.garber+dev@gmail.com>
 //		apiConcierge.js created on 2017-06-26
 
-/*
-var usingMockData = false;
-
-var mockData = {
+let mockData = {
 	waterFlow: 32.9,
 	waterTemp: 21.3,
 	waterLevel: 12.9,
@@ -17,57 +14,16 @@ var mockData = {
 	sunset: null
 };
 
-var apiClients = {
+let apiClients = {
 	'weather.gov': gov_weather,
 	'usgs.gov': gov_usgs,
 	'openweather.org': org_openweathermap,
 	'sunrise-sunset.org': org_sunrise_sunset
 };
 
-var getWaterFlow = function (setterFunc) {
-	if (usingMockData) { return mockData.waterFlow; }
-	return apiClients['weather.gov'].getWaterFlow(setterFunc);
-};
-
-var getWaterLevel = function (setterFunc) {
-	if (usingMockData) { return mockData.waterLevel; }
-	return apiClients['weather.gov'].getWaterLevel(setterFunc);
-};
-
-var getWaterTemp = function (setterFunc) {
-	if (usingMockData) { return mockData.waterTemp; }
-	return apiClients['usgs.gov'].getWaterTemp(setterFunc);
-};
-
-var getAirTemp = function (setterFunc) {
-	if (usingMockData) { return mockData.airTemp; }
-	return apiClients['openweather.org'].getAirTemp(setterFunc);
-};
-
-var getAirSpeed = function (setterFunc) {
-	if (usingMockData) { return mockData.airSpeed; }
-	return apiClients['openweather.org'].getAirSpeed(setterFunc);
-};
-
-var getAirDirxn = function (setterFunc) {
-	if (usingMockData) { return mockData.airDirxn; }
-	return apiClients['openweather.org'].getAirDirxn(setterFunc);
-};
-
-var getSunrise = function (setterFunc) {
-	if (usingMockData) { return mockData.sunrise; }
-	return apiClients['sunrise-sunset.org'].getSunrise(setterFunc);
-};
-
-var getSunset = function (setterFunc) {
-	if (usingMockData) { return mockData.sunset; }
-	return apiClients['sunrise-sunset.org'].getSunset(setterFunc);
-};
-*/
-
 //	Object-Based Version
 
-var apiConcierge = {
+let apiConcierge = {
 	
 	// skip AJAX requests
 	usingMockData: false,
@@ -102,7 +58,7 @@ var apiConcierge = {
 		if (this.usingMockData) {				// if using mock data, short circuit
 			 return mockData[valueId];
 		}
-		var getter = this.accessorMap[valueId];
+		let getter = this.accessorMap[valueId];
 		getter(setterFunc);
 	}
 	

@@ -3,33 +3,41 @@
 //		by Maxwell B Garber <max.garber+dev@gmail.com>
 //		app.js created 207-06-27
 
-
 var AppViewModel = function () {
+	
+	//	Dev/Debug properties
+	this.devMode = true;
+	this.graphEnabled = ko.observable(false);
+	
 	// static, private
 	this._initString = ' ';
 	
-	// observable, public
+	// @section Water: Flow, Level, Temperature
 	this.waterFlow = ko.observable(this._initString);
 	this.waterFlowUnits = ko.observable("kcfs");
 	this.waterFlowColor = ko.computed(function () {
 		var color = trra_safety.rowing.zoneColorForWaterFlow(this.waterFlow());
 		return color;
 	}, this);
-	
 	this.waterLevel = ko.observable(this._initString);
 	this.waterLevelUnits = ko.observable("ft");
-	/* this.waterLevelColor = ko.computed(function () {
-		// no scale for flood stage exists
-	}, this); */
-	
 	this.waterTemp = ko.observable(this._initString);
 	this.waterTempUnits = ko.observable("˚C");
 	this.waterTempColor = ko.computed(function () {
 		var color = trra_safety.rowing.zoneColorForWaterTemp(this.waterTemp());
 		return color;
 	}, this);
+	this.waterTempF = ko.computed(function () {
+		let tempC = this.waterTemp();
+		var tempF = '';
+		if (tempC != null && tempC != this._initString) {
+			tempF = (tempC * (9/5)) + 32;
+			tempF = tempF.toFixed(1);
+		}
+		return tempF;
+	}, this);
 	
-	//	openweathermap-based; conditionally disabled until CSP problem resolved
+	// @section Air: Wind, Temperature
 	this.airPropertiesEnabled = ko.observable(false);
 	if (this.airPropertiesEnabled()) {
 		this.airTemp = ko.observable(this._initString);
@@ -39,10 +47,9 @@ var AppViewModel = function () {
 		this.airDirxn = ko.observable(this._initString);
 	}
 	
-	//	these will be moment objects
+	// @section Sun: Sunrise, Sunset
 	this.sunrise = ko.observable(this._initString);
 	this.sunset = ko.observable(this._initString);
-	//	these will be the text displays
 	this.sunriseText = ko.computed(function () {
 		if (this.sunrise() != this._initString) {
 			return this.sunrise().format('h:mm a');
@@ -58,7 +65,7 @@ var AppViewModel = function () {
 		}
 	}, this);
 	
-	// computed, private
+	// @section Internal-Private
 	this._updated = ko.computed(function () {
 		var updated = true;
 		updated = updated && !(this.waterFlow() == this._initString);
@@ -83,7 +90,7 @@ var AppViewModel = function () {
 		return ready;
 	}, this);
 	
-	// computed, public
+	// @section Zone
 	this.zone = ko.computed(function () {
 		var zone = this._initString;
 		
@@ -98,13 +105,53 @@ var AppViewModel = function () {
 		
 		return zone;
 	}, this);
-	
 	this.zoneColor = ko.computed(function () {
 		var color = trra_safety.rowing.zoneColorForZone(this.zone());
 		return color;
 	}, this);
 	
-	// methods, public
+	// experimental
+	this.safetyInfoForCategoryAndZone = function (category, zone) {
+		let categoryEntry = trra_safety.rowing.matrix[category][zone];
+		return categoryEntry;
+	};
+	
+	// @section Safety Rules
+	this.shellTypes = ko.computed(function () {
+		let zone = this.zone();
+		let shells = trra_safety.rowing.matrix.shellType[zone];
+		return shells;
+	}, this);
+	this.launchRatio = ko.computed(function () {
+		let zone = this.zone();
+		let launchRatio = trra_safety.rowing.matrix.launchToShellRatio[zone];
+		return launchRatio;
+	}, this);
+	this.coachCert = ko.computed(function () {
+		let zone = this.zone();
+		let coaches = trra_safety.rowing.matrix.coachCertification[zone];
+		return coaches;
+	}, this);
+	this.pfdReq = ko.computed(function () {
+		let zone = this.zone();
+		let pfdR = trra_safety.rowing.matrix.pfdRequirement[zone];
+		return pfdR;
+	}, this);
+	this.commsEquip = ko.computed(function () {
+		let zone = this.zone();
+		let comms = trra_safety.rowing.matrix.commRequirement[zone];
+		return comms;
+	}, this);
+	this.crewSkill = ko.computed(function () {
+		let zone = this.zone();
+		return trra_safety.rowing.matrix.crewSkillLevel[zone];
+	}, this);
+	this.additionalSafety = ko.computed(function () {
+		let zone = this.zone();
+		return trra_safety.rowing.matrix.additionalSafetyItems[zone];
+	}, this);
+	
+	// @section primary operation
 	this.update = function () {
 		
 		//	Pattern: for given variable, invoke corresponding function declared in apiConceierge
@@ -114,6 +161,7 @@ var AppViewModel = function () {
 		apiConcierge.getValueAsync('waterFlow', this.waterFlow);
 		apiConcierge.getValueAsync('waterLevel', this.waterLevel);
 		apiConcierge.getValueAsync('waterTemp', this.waterTemp);
+		// intervene for unit switching
 		
 		//	Air temp & wind are disabled b/c OpenWeatherMap doesn't support HTTPS and I don't know
 		//	  …how to modify the content security policy to allow mixed resource use
