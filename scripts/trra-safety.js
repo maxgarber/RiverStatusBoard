@@ -133,7 +133,7 @@ var trra_safety = {
 				4: "USRA Level 2+ certification",
 				5: "USRA Level 2+ certification",
 				6: "USRA Level 2+ certification",
-				7: "Leave them alone--you're not going out"
+				7: "Leave them alone, you can't go out"
 			},
 		
 			pfdRequirement: {
@@ -143,7 +143,7 @@ var trra_safety = {
 				4: "PFDs on all rowers & coxswains",
 				5: "PFDs on all rowers & coxswains",
 				6: "PFDs on all rowers & coxswains",
-				7: "Why would you? You're not going out on the water"
+				7: "Don't need any where you're staying: on land"
 			},
 		
 			commRequirement: {

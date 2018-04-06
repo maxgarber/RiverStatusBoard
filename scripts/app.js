@@ -41,13 +41,11 @@ var AppViewModel = function () {
 	
 	// @section Air: Wind, Temperature
 	this.airPropertiesEnabled = ko.observable(false);
-	if (this.airPropertiesEnabled()) {
-		this.airTemp = ko.observable(this._initString);
-		this.airTempUnits = ko.observable("˚C");
-		this.airSpeed = ko.observable(this._initString);
-		this.airSpeedUnits = ko.observable("mph");
-		this.airDirxn = ko.observable(this._initString);
-	}
+	this.airTemp = ko.observable(this._initString);
+	this.airTempUnits = ko.observable("˚C");
+	this.airSpeed = ko.observable(this._initString);
+	this.airSpeedUnits = ko.observable("mph");
+	this.airDirxn = ko.observable(this._initString);
 	
 	// @section Sun: Sunrise, Sunset
 	this.sunrise = ko.observable(this._initString);
@@ -130,8 +128,8 @@ var AppViewModel = function () {
 	
 	// @section controlElements' functions
 	this.toggleAttribution = function () {
-		$('#attribution-container').slideToggle();
-		let y = $('#attribution-container').position().top;
+		$('#attributionRow').slideToggle();
+		let y = $('#attributionRow').position().top;
 		window.scrollTo(0,y*1.1);
 	};
 	
@@ -179,10 +177,6 @@ var AppViewModel = function () {
 		let zone = this.zone();
 		return trra_safety.rowing.matrix.additionalSafetyItems[zone];
 	}, this);
-	
-	this.init = function () {
-		$('#attribution-container').slideUp(0);
-	},
 	
 	// @section primary operation
 	this.update = function () {

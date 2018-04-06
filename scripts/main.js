@@ -14,14 +14,12 @@ let main = function () {
 	var viewModel = new AppViewModel();
 	var bindingContext = document.getElementById('koBindingContext');
 	ko.applyBindings(viewModel, bindingContext);
-	viewModel.init();
+	window.vm = viewModel;
 	
 	//	set to update every 15 minutes
 	window.autoRefresher = setInterval(function () {
-		viewModel.update();
+		window.vm.update();
 	}, 1000*60*15);
-	
-	window.vm = viewModel;
 	
 	if (viewModel.graphEnabled()) {
 		setupGraphStructures();

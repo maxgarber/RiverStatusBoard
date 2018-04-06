@@ -66,14 +66,15 @@
 				<div class="container-fluid center-block">
 					
 					<!-- BEGIN Title Row -->
-					<div class="row dividingRow-bottomBorder">
-						<div class="col-lg-1 col-md-2 col-sm-0 col-xs-0 text-left"></div>
-						<div class="col-lg-10 col-md-8 col-sm-12 col-xs-12 text-center">
-							<h1 class="h1-custom">Allegheny River Conditions</h1>
+					<div class="row" id="titleRow">
+						<div class="col-lg-2 col-md-3 col-sm-0 col-xs-0 text-left"></div>
+						<div class="col-lg-8 col-md-6 col-sm-12 col-xs-12 text-center">
+							<h1>Allegheny River Conditions</h1>
 						</div>
-						<div class="col-lg-1 col-md-2 col-sm-12 col-xs-12 text-center controlsContainer">
+						<div class="col-lg-2 col-md-3 col-sm-12 col-xs-12 text-center" id="controlCells">
 							<h2>
 								<span class="glyphicon glyphicon-refresh controlElement" id="refresh-button" data-bind="click: manualRefresh"></span>
+								<span class="controlCellSpacer"></span>
 								<span class="glyphicon glyphicon-info-sign controlElement" id="attribution-info-toggle" data-bind="click: toggleAttribution"></span>
 							</h2>
 						</div>
@@ -81,59 +82,39 @@
 					<!-- END Title Row -->
 					
 					<!--  BEGIN Current Conditions & Rules Row -->
-					<div class="row">
+					<div class="row" id="conditionsRow">
 						
 						<!-- BEGIN Current Values Table -->
 						<div class="col-lg-4 col-md-6 col-sm-12 col-xs-12 text-center">
-							<h2 class="colTitle">Now</h2>
-							
+							<h2>Now</h2>
 							<div id="now-data-container" class="container-fluid">
+								<!-- flow rate -->
 								<div class="row now-value-row">
 									<div class="col-lg-4 col-md-4 col-sm-3 col-xs-4 text-right now-value-name">
 										<span>Flow</span>
 									</div>
 									<div class="col-lg-8 col-md-8 col-sm-9 col-xs-8 text-left now-value-value">
 										<span class="label label-default" id="dataField-flow" 
-											data-bind="{
-												text: waterFlow,
-												style: {
-													'background-color': waterFlowColor
-												}
-											}"></span>
+											data-bind="{ text: waterFlow, style: { 'background-color': waterFlowColor } }"></span>
 										<span class="now-value-units" data-bind="text: waterFlowUnits"></span>
 									</div>
 								</div>
-							
+								<!-- water temperature -->
 								<div class="row now-value-row">
 									<div class="col-lg-4 col-md-4 col-sm-3 col-xs-4 text-right now-value-name">
 										<span>Water</span>
 									</div>
 									<div class="col-lg-8 col-md-8 col-sm-9 col-xs-8 text-left now-value-value">
-										<div style="display: inline-block;">
 										<span class="label label-default" id="dataField-temp"
-											data-bind="{
-												text: waterTemp,
-												style: {
-													'background-color': waterTempColor
-												}
-											}">
-										</span>
+											data-bind="{ text: waterTemp, style: { 'background-color': waterTempColor }}"></span>
 										<span class="now-value-units" data-bind="text: waterTempUnits"></span>
-										</div>
-										<div style="display: inline-block;">
-											<span class="label label-default" id="dataField-temp"
-												data-bind="{
-													text: waterTempF,
-													style: {
-														'background-color': waterTempColor
-													}
-												}">
-											</span>
-											<span class="now-value-units">˚F</span>
-										</div>
+										<!-- now show it in fahrenheit for the rubes -->
+										<span class="label label-default" id="dataField-temp"
+											data-bind="{ text: waterTempF, style: { 'background-color': waterTempColor } }"></span>
+										<span class="now-value-units">˚F</span>
 									</div>
 								</div>
-							
+								<!-- water height -->
 								<div class="row now-value-row">
 									<div class="col-lg-4 col-md-4 col-sm-3 col-xs-4 text-right now-value-name">
 										<span>Gauge</span>
@@ -143,8 +124,8 @@
 										<span class="now-value-units" data-bind="text: waterLevelUnits"></span>
 									</div>
 								</div>
-								
-								<div class="row now-value-row" data-bind="if: airPropertiesEnabled">
+								<!-- air temperature -->
+								<div class="row now-value-row" data-bind="visible: airPropertiesEnabled">
 									<div class="col-lg-4 col-md-4 col-sm-3 col-xs-3 text-right now-value-name">
 										<span>Air</span>
 									</div>
@@ -153,8 +134,8 @@
 										<span class="now-value-units" data-bind="text: airTempUnits"></span>
 									</div>
 								</div>
-							
-								<div class="row now-value-row" data-bind="if: airPropertiesEnabled">
+								<!-- wind -->
+								<div class="row now-value-row" data-bind="visible: airPropertiesEnabled">
 									<div class="col-lg-4 col-md-4 col-sm-3 col-xs-3 text-right now-value-name">
 										<span>Wind</span>
 									</div>
@@ -164,7 +145,7 @@
 										<span id="dataField-windDirxn" data-bind="text: airDirxn"></span>
 									</div>
 								</div>
-								
+								<!-- sunrise -->
 								<div class="row now-value-row">
 									<div class="col-lg-4 col-md-4 col-sm-3 col-xs-4 text-right now-value-name">
 										<span>Sunrise</span>
@@ -173,7 +154,7 @@
 										<span class="label label-default" id="dataField-dawn" data-bind="text: sunriseText"></span>
 									</div>
 								</div>
-								
+								<!-- sunset -->
 								<div class="row now-value-row">
 									<div class="col-lg-4 col-md-4 col-sm-3 col-xs-4 text-right now-value-name">
 										<span>Sunset</span>
@@ -182,20 +163,16 @@
 										<span class="label label-default" id="dataField-dusk" data-bind="text: sunsetText"></span>
 									</div>
 								</div>
-								
-							</div>
+							</div><!-- end current conditions fluid subcontainer -->
 						</div>
 						<!-- END Current Values Table -->
 					
 						<!-- BEGIN Current Zone Display -->
 						<div class="col-lg-4 col-md-6 col-sm-12 col-xs-12 text-center">
-							<h2 class="colTitle">Zone</h2>
+							<h2>Zone</h2>
 							<div id="zone-data-container">
 								<span class="label label-default" id="dataField-zone"
-									data-bind="{
-										text: zoneDisplay,
-										style: { 'background-color': zoneColor }
-									}">
+									data-bind="{ text: zoneDisplay, style: { 'background-color': zoneColor } }">
 								</span>
 							</div>
 						</div>
@@ -205,57 +182,62 @@
 						<div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 text-center">
 							<h2 class="colTitle">Safety Rules</h2>
 							<div class="container-fluid" id="rules-data-container">
+								<!-- shell types -->
 								<div class="row rules-value-row">
 									<div class="col-lg-5 col-md-2 col-sm-3 col-xs-1 text-right rules-value-name">
 										<span class="label label-info">Shell Types</span>
 									</div>
 									<div class="col-lg-7 col-md-10 col-sm-9 col-xs-12 col-md-offset-0 col-sm-offset-0 col-xs-offset-1 text-left rules-value-value">
-										<span id="dataField-shells" data-bind="text:shellTypes"></span>
+										<span id="dataField-shells" data-bind="text: shellTypes"></span>
 									</div>
 								</div>
+								<!-- crew skill level -->
 								<div class="row rules-value-row">
 									<div class="col-lg-5 col-md-2 col-sm-3 col-xs-1 text-right rules-value-name">
 										<span class="label label-info">Skill Level</span>
 									</div>
 									<div class="col-lg-7 col-md-10 col-sm-9 col-xs-12 col-md-offset-0 col-sm-offset-0 col-xs-offset-1 text-left rules-value-value">
-										<span id="dataField-skill"  data-bind="text:crewSkill"></span>
+										<span id="dataField-skill"  data-bind="text: crewSkill"></span>
 									</div>
 								</div>
+								<!-- coaches' launch:shell ratio -->
 								<div class="row rules-value-row">
 									<div class="col-lg-5 col-md-2 col-sm-3 col-xs-1 text-right rules-value-name">
 										<span class="label label-info">Launches</span>
 									</div>
 									<div class="col-lg-7 col-md-10 col-sm-9 col-xs-12 col-md-offset-0 col-sm-offset-0 col-xs-offset-1 text-left rules-value-value">
-										<span id="dataField-launches" data-bind="text:launchRatio"></span>
+										<span id="dataField-launches" data-bind="text: launchRatio"></span>
 									</div>
 								</div>
+								<!-- coach certification -->
 								<div class="row rules-value-row">
 									<div class="col-lg-5 col-md-2 col-sm-3 col-xs-1 text-right rules-value-name">
 										<span class="label label-info">Coaches</span>
 									</div>
 									<div class="col-lg-7 col-md-10 col-sm-9 col-xs-12 col-md-offset-0 col-sm-offset-0 col-xs-offset-1 text-left rules-value-value">
-										<span id="dataField-coaches" data-bind="text:coachCert"></span>
+										<span id="dataField-coaches" data-bind="text: coachCert"></span>
 									</div>
 								</div>
+								<!-- safety gear/equipment -->
 								<div class="row rules-value-row">
 									<div class="col-lg-5 col-md-2 col-sm-3 col-xs-1 text-right rules-value-name">
 										<span class="label label-info">Safety Gear</span>
 									</div>
 									<div class="col-lg-7 col-md-10 col-sm-9 col-xs-12 col-md-offset-0 col-sm-offset-0 col-xs-offset-1 text-left rules-value-value">
-										<span id="dataField-pdfReq" data-bind="text:pfdReq"></span><br />
-										<span id="dataField-commsEquip"  data-bind="text:commsEquip"></span><br />
-										<span id="dataField-skill"  data-bind="text:additionalSafety"></span>
+										<span id="dataField-pdfReq" data-bind="text: pfdReq"></span><br />
+										<span id="dataField-commsEquip"  data-bind="text: commsEquip"></span><br />
+										<span id="dataField-safetyExtras"  data-bind="text: additionalSafety"></span>
 									</div>
 								</div>
-								<div class="row rules-value-row">&nbsp;</div>
 							</div>
 						</div>
 						<!-- END Safety Values Table -->
+						
 					</div>
 					<!--  END Current Conditions & Rules Row -->
 					
 					<!-- BEGIN Recent Conditions Graph Row -->
-					<div class="row center-block" data-bind="visible: graphEnabled">
+					<div class="row center-block" id="graphRow" data-bind="visible: graphEnabled">
 						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center" id="graphRow">
 							<h2 class="colTitle">Recent Conditions</h2>
 							<div class="graph-data-container">
@@ -266,78 +248,65 @@
 					<!-- END Recent Conditions Graph Row -->
 
 					<!-- BEGIN Data attribution section -->
-					<div id="attribution-container">
-						
-						<div class="row dividingRow-topBorder" class="attribution text-center center-block">
-							<div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 text-center">
-								<h3 class="attributionHeader">Data provided by:</h3>
+					<div class="row text-center center-block" id="attributionRow">
+							<div class="col-lg-2 col-md-1 col-sm-1 col-xs-12 text-right">
+								<h4 class="attributionHeader">Data from:</h4>
 							</div>
-							<div class="col-lg-1 col-md-1 col-sm-0 col-xs-0"></div>
-							<div class="col-lg-2 col-md-2 col-sm-6 col-xs-6 center-block">
-								<div class="thumbnail">
-									<img class="attribution-logo vcenter" src="media/usgs-logo.png" />
-									<div class="caption">
-										<span class="attributionBody">US Geological Survey</span>
-									</div>
-								</div>
+							<div class="col-lg-1 col-md-1 col-sm-2 col-xs-2 text-center attribution-logo-container">
+								<a href="https://www.usgs.gov/products/data-and-tools/real-time-data/water" target="_blank">
+									<img class="attribution-logo" src="media/usgs-logo.png" />
+								</a>
 							</div>
-							<div class="col-lg-2 col-md-2 col-sm-6 col-xs-6 center-block">
-								<img class="attribution-logo vcenter" src="media/noaa-logo.png" />
-								<span class="attributionBody">National Oceanic &amp; Atmospheric Administration</span>
+							<div class="col-lg-1 col-md-1 col-sm-2 col-xs-2 center-block attribution-logo-container">
+								<a href="https://water.weather.gov/ahps/" target="_blank">
+									<img class="attribution-logo" src="media/noaa-logo.png" />
+								</a>
 							</div>
-							<div class="col-lg-2 col-md-2 col-sm-6 col-xs-6 center-block">
-								<img class="attribution-logo vcenter" src="media/sunrs-logo.png" />
-								<span class="attributionBody">Sunrise-Sunset</span>
+							<div class="col-lg-1 col-md-1 col-sm-2 col-xs-2 center-block attribution-logo-container">
+								<a href="https://sunrise-sunset.org" target="_blank">
+									<img class="attribution-logo" src="media/sunrs-logo.png" />
+								</a>
 							</div>
-							<div class="col-lg-2 col-md-2 col-sm-6 col-xs-6 center-block">
-								<img class="attribution-logo vcenter" src="media/trra-logo.png" />
-								<span class="attributionBody">Three Rivers Rowing Association</span>
+							<div class="col-lg-1 col-md-1 col-sm-2 col-xs-2 center-block attribution-logo-container">
+								<a href="http://threeriversrowing.org/safety/weather-and-water-flow/" target="_blank">
+									<img class="attribution-logo" src="media/trra-logo.png" />
+								</a>
 							</div>
-						</div>
-					
-						<div class="row attribution text-center center-block">
-							<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 text-center">
-								<h3 class="attributionHeader">This site built with:</h3>
+							<div class="col-lg-2 col-md-1 col-sm-1 col-xs-12 text-right">
+								<h4 class="attributionHeader">Built with:</h4>
 							</div>
-							<div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>
-							<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 center-block">
-								<img class="img-responsive attribution-logo" src="media/bootstrap-logo.png" />
+							<div class="col-lg-1 col-md-1 col-sm-2 col-xs-2 center-block attribution-logo-container">
+								<a href="https://getbootstrap.com/docs/3.3/" target="_blank">
+									<img class="img-responsive attribution-logo" src="media/bootstrap-logo.png" />
+								</a>
 							</div>
-							<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 center-block">
-								<img class="img-responsive attribution-logo" src="media/jquery-logo.png" />
+							<div class="col-lg-1 col-md-1 col-sm-2 col-xs-2 center-block attribution-logo-container">
+								<a href="http://jquery.com" target="_blank">
+									<img class="img-responsive attribution-logo" src="media/jquery-logo.png" />
+								</a>
 							</div>
-							<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 center-block">
-								<img class="img-responsive attribution-logo" src="media/knockout-logo.png" />
+							<div class="col-lg-1 col-md-1 col-sm-2 col-xs-2 center-block attribution-logo-container">
+								<a href="http://knockoutjs.com/index.html" target="_blank">
+									<img class="img-responsive attribution-logo" src="media/knockout-logo.png" />
+								</a>
 							</div>
-							<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 center-block">
-								<img class="img-responsive attribution-logo" src="media/moment-logo.png" />
+							<div class="col-lg-1 col-md-1 col-sm-2 col-xs-2 center-block attribution-logo-container">
+								<a href="http://momentjs.com" target="_blank">
+									<img class="img-responsive attribution-logo" src="media/moment-logo.png" />
+								</a>
 							</div>
-						</div>
-						<div class="row attributionBody">
-							<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3"></div>
-							<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 text-center">
-								<span class="attributionBody">Bootstrap</span>
-							</div>
-							<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 text-center">
-								<span class="attributionBody">jQuery</span>
-							</div>
-							<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 text-center">
-								<span class="attributionBody">Knockout</span>
-							</div>
-							<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 text-center">
-								<span class="attributionBody">Moment</span>
-							</div>
-					</div>
-				</div>
-					
-					<div class="row dividingRow-topBorder">
-						<div class="col-lg-11 col-md-11 col-sm-11 col-xs-11 text-left disclaimer">
-							<span>© 2018 by Maxwell Garber.</span>
-							<span>This site is intended for use only by staff, members, and guests of Three Rivers Rowing Association.</span><br />
-							<span>It is not intended to be a substitute for evaluating safety conditions using good judgement, and therefore assumes no liability if you do something stupid and/or dangerous.</span>
-						</div>
 					</div>
 					<!-- END Data attribution row -->
+					
+					<!-- BEGIN copyright row -->
+					<div class="row" id="copyrightRow">
+						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
+							<span>© 2018 by Maxwell Garber.</span><br />
+							<span>This site is intended for use only by staff, members, and guests of Three Rivers Rowing Association.</span><br />
+							<span>It is not intended to be a substitute for evaluating safety conditions using good judgement,<br />and therefore assumes no liability if you do something stupid and/or dangerous.</span>
+						</div>
+					</div>
+					<!-- END copyright row -->
 					
 					<div id="bottom-gutter">&nbsp;</div>
 				</div>
