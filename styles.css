@@ -18,8 +18,18 @@ body {
 
 .h1-custom {
 	color: #ffffff;
+}
+
+.dividingRow-topBorder {
+	padding-top: 2em;
+	padding-bottom: 2em;
+	border-top: 2pt solid white;
+}
+
+.dividingRow-bottomBorder {
+	padding-top: 2em;
+	padding-bottom: 2em;
 	border-bottom: 2pt solid white;
-	padding-bottom: 1em;
 }
 
 #container-outer {
@@ -32,7 +42,7 @@ body {
 	width: auto;
 	height: auto;
 		
-	background: linear-gradient(black, #4c4c55);
+	background: linear-gradient(#0e0e0e, #4c4c55);
 }
 
 #container-inner {
@@ -44,7 +54,7 @@ body {
 
 .colTitle {
 	color: white;
-	margin: 1em;
+	padding-top: 1em;
 }
 
 
@@ -142,11 +152,56 @@ span.now-value-units {
 	/* background-color: #107e02; */
 }
 
-#attribution {
-	color: #666666;
-	font-weight: thin;
+.label-zone-7 {
+	border: 1pt solid white;
 }
 
+#status-info-separator {
+	margin-top: 0;
+	margin-bottom: 1em;
+}
+
+.controlsContainer {
+	margin-top: 0.5em;
+}
+
+.controlElement {
+	color: #ffffff;
+	font-weight: thin;
+	padding-left: 0.5em;
+	padding-right: 0.5em;
+}
+
+.controlElement:active {
+	color: #f0f0f0;
+}
+
+.attribution-logo {
+	display: block;
+	margin: auto;
+	min-height: 1em;
+	max-height: 3em;
+	min-width: 3em;
+	max-width: 5em;
+	vertical-align: middle;
+}
+
+.attributionHeader {
+	color: #ffffff;
+	font-weight: bold;
+	padding-top: 0.5em;
+}
+
+.attributionBody {
+	color: #ffffff;
+	font-weight: thin;
+	padding-bottom: 1.5em;
+}
+
+.disclaimer {
+	color: #ffffff;
+	font-weight: thin;
+}
 
 #bottom-gutter {
 	height: 5em;
@@ -155,6 +210,12 @@ span.now-value-units {
 /*	Debugging Styles	*/
 .dashedBorder {
 	border: 1px dashed white;
+}
+
+.vcenter {
+	position: absolute;
+	top: 50%;
+	left: 50%;
 }
 
 /* EOF */

@@ -112,7 +112,8 @@ var trra_safety = {
 				3: "8+, 4+, 4x and 2x, Adaptive LTA racing 2x only",
 				4: "8+, 4+ and 4x",
 				5: "8+ and 4x",
-				6: "8+ and 4x"
+				6: "8+ and 4x",
+				7: "No boats allowed on the water"
 			},
 		
 			launchToShellRatio: {
@@ -121,7 +122,8 @@ var trra_safety = {
 				3: "1 launch per 2 shells (of equal speed)",
 				4: "1 launch per 2 shells (of equal speed)",
 				5: "1 launch per shell",
-				6: "Sufficient launches to (a) carry all rowers and coxes participating in session, and (b) have at least 2 engines as between all launches on the water (towing line required)"
+				6: "Sufficient launches to (a) carry all rowers and coxes participating in session, and (b) have at least 2 engines as between all launches on the water (towing line required)",
+				7: "I said no boats"
 			},
 		
 			coachCertification: {
@@ -130,7 +132,8 @@ var trra_safety = {
 				3: "USRA Level 2+ certification",
 				4: "USRA Level 2+ certification",
 				5: "USRA Level 2+ certification",
-				6: "USRA Level 2+ certification"
+				6: "USRA Level 2+ certification",
+				7: "Leave them alone--you're not going out"
 			},
 		
 			pfdRequirement: {
@@ -139,7 +142,8 @@ var trra_safety = {
 				3: "PFDs Optional",
 				4: "PFDs on all rowers & coxswains",
 				5: "PFDs on all rowers & coxswains",
-				6: "PFDs on all rowers & coxswains"
+				6: "PFDs on all rowers & coxswains",
+				7: "Why would you? You're not going out on the water"
 			},
 		
 			commRequirement: {
@@ -148,7 +152,8 @@ var trra_safety = {
 				3: "Protected Cell Phone Required",
 				4: "Protected Cell Phone Required",
 				5: "Protected Cell Phone Required",
-				6: "Protected Cell Phone and Marine Radio Required for all coaches; at least one additional person at the boathouse with cell phone, marine radio and car during entire session"
+				6: "Protected Cell Phone and Marine Radio Required for all coaches; at least one additional person at the boathouse with cell phone, marine radio and car during entire session",
+				7: ""
 			},
 		
 			crewSkillLevel: {
@@ -157,7 +162,8 @@ var trra_safety = {
 				3: "Any Level. Adaptive, LTA racers only",
 				4: "No Novices or adaptive rowers or equipment allowed on the water",
 				5: "No Novices or adaptive rowers or equipment allowed on the water",
-				6: "No Novices or adaptive rowers or equipment allowed on the water"
+				6: "No Novices or adaptive rowers or equipment allowed on the water",
+				7: "None required for staying on land"
 			},
 		
 			additionalSafetyItems: {
@@ -217,7 +223,13 @@ var trra_safety = {
 		},
 		
 		zoneColorForZone: function(zone) {
-			return semanticColors[zone];
+			if (zone > 0 && zone <= 6) {
+				return semanticColors[zone];
+			} else if (zone > 6) {
+				return '#000000';
+			} else {
+				return '';
+			}
 		}
 		
 	},

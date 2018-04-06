@@ -12,6 +12,8 @@ var AppViewModel = function () {
 	// static, private
 	this._initString = ' ';
 	
+	this.referenceToAppViewModel = this;
+	
 	// @section Water: Flow, Level, Temperature
 	this.waterFlow = ko.observable(this._initString);
 	this.waterFlowUnits = ko.observable("kcfs");
@@ -110,11 +112,38 @@ var AppViewModel = function () {
 		return color;
 	}, this);
 	
+	this.zoneDisplay = ko.computed(function () {
+		let zone = this.zone();
+		if (zone > 6) {
+			// show prohibited
+			return 'X';
+		} else {
+			return zone;
+		}
+	}, this);
+	
 	// experimental
 	this.safetyInfoForCategoryAndZone = function (category, zone) {
 		let categoryEntry = trra_safety.rowing.matrix[category][zone];
 		return categoryEntry;
 	};
+	
+	// @section controlElements' functions
+	this.toggleAttribution = function () {
+		$('#attribution-container').slideToggle();
+		let y = $('#attribution-container').position().top;
+		window.scrollTo(0,y*1.1);
+	};
+	
+	this.manualRefresh = function () {
+		this.update();
+		$("#refresh-button").rotate({
+			angle:0,
+			animateTo: 720,
+			duration: 1500,
+			easing: $.easing.easeInOutExpo
+		});
+	}
 	
 	// @section Safety Rules
 	this.shellTypes = ko.computed(function () {
@@ -150,6 +179,10 @@ var AppViewModel = function () {
 		let zone = this.zone();
 		return trra_safety.rowing.matrix.additionalSafetyItems[zone];
 	}, this);
+	
+	this.init = function () {
+		$('#attribution-container').slideUp(0);
+	},
 	
 	// @section primary operation
 	this.update = function () {
