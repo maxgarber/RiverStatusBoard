@@ -71,14 +71,13 @@
 						<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 text-center">
 							<h1>Allegheny River Conditions</h1>
 						</div>
-						<div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 text-right" id="lastUpdatedCol">
+						<div class="col-lg-1 col-md-1 col-sm-0 col-xs-0 text-right" id="lastUpdatedCol">
 							<span class="" data-bind="visible: lastUpdatedVisible">updated:</span>
 							<span class="label label-default" id="lastUpdatedLabel" data-bind="{ visible: lastUpdatedVisible, text: lastUpdated }"></span>
 						</div>
 						<div class="col-lg-2 col-md-3 col-sm-12 col-xs-12 text-center" id="controlCells">
 							<h2>
-								<span class="glyphicon glyphicon-refresh controlElement" id="refresh-button"
-									data-bind="click: manualRefresh"></span>
+								<span class="glyphicon glyphicon-refresh controlElement" id="refresh-button" data-bind="click: manualRefresh"></span>
 								<span class="controlCellSpacer"></span>
 								<span class="glyphicon glyphicon-info-sign controlElement" id="attribution-info-toggle" data-bind="click: toggleAttribution"></span>
 							</h2>
@@ -110,13 +109,17 @@
 										<span>Water</span>
 									</div>
 									<div class="col-lg-8 col-md-8 col-sm-6 col-xs-8 text-left now-value-value">
-										<span class="label label-default" id="dataField-temp"
-											data-bind="{ text: waterTemp, style: { 'background-color': waterTempColor }}"></span>
-										<span class="now-value-units" data-bind="text: waterTempUnits"></span>
+										<div class="waterTempAndUnitsDiv">
+											<span class="label label-default" id="dataField-temp"
+												data-bind="{ text: waterTemp, style: { 'background-color': waterTempColor }}"></span>
+											<span class="now-value-units" data-bind="text: waterTempUnits"></span>
+										</div>
 										<!-- now show it in fahrenheit for the rubes -->
-										<span class="label label-default" id="dataField-temp"
-											data-bind="{ text: waterTempF, style: { 'background-color': waterTempColor } }"></span>
-										<span class="now-value-units">˚F</span>
+										<div class="waterTempAndUnitsDiv">
+											<span class="label label-default" id="dataField-temp"
+												data-bind="{ text: waterTempF, style: { 'background-color': waterTempColor } }"></span>
+											<span class="now-value-units">˚F</span>
+										</div>
 									</div>
 								</div>
 								<!-- water height -->
@@ -196,7 +199,7 @@
 									<div class="col-lg-4 col-md-4 col-sm-3 col-xs-1 text-right rules-value-name">
 										<span class="label label-info">Shell Types</span>
 									</div>
-									<div class="col-lg-8 col-md-8 col-sm-9 col-xs-12 col-md-offset-0 col-sm-offset-0 col-xs-offset-1 text-left rules-value-value">
+									<div class="col-lg-8 col-md-8 col-sm-9 col-xs-12 text-left rules-value-value">
 										<span id="dataField-shells" data-bind="text: shellTypes"></span>
 									</div>
 								</div>
@@ -205,7 +208,7 @@
 									<div class="col-lg-4 col-md-4 col-sm-3 col-xs-1 text-right rules-value-name">
 										<span class="label label-info">Skill Level</span>
 									</div>
-									<div class="col-lg-8 col-md-8 col-sm-9 col-xs-12 col-md-offset-0 col-sm-offset-0 col-xs-offset-1 text-left rules-value-value">
+									<div class="col-lg-8 col-md-8 col-sm-9 col-xs-12 text-left rules-value-value">
 										<span id="dataField-skill"  data-bind="text: crewSkill"></span>
 									</div>
 								</div>
@@ -214,7 +217,7 @@
 									<div class="col-lg-4 col-md-4 col-sm-3 col-xs-1 text-right rules-value-name">
 										<span class="label label-info">Launches</span>
 									</div>
-									<div class="col-lg-8 col-md-8 col-sm-9 col-xs-12 col-md-offset-0 col-sm-offset-0 col-xs-offset-1 text-left rules-value-value">
+									<div class="col-lg-8 col-md-8 col-sm-9 col-xs-12 text-left rules-value-value">
 										<span id="dataField-launches" data-bind="text: launchRatio"></span>
 									</div>
 								</div>
@@ -223,7 +226,7 @@
 									<div class="col-lg-4 col-md-4 col-sm-3 col-xs-1 text-right rules-value-name">
 										<span class="label label-info">Coaches</span>
 									</div>
-									<div class="col-lg-8 col-md-8 col-sm-9 col-xs-12 col-md-offset-0 col-sm-offset-0 col-xs-offset-1 text-left rules-value-value">
+									<div class="col-lg-8 col-md-8 col-sm-9 col-xs-12 text-left rules-value-value">
 										<span id="dataField-coaches" data-bind="text: coachCert"></span>
 									</div>
 								</div>
@@ -232,7 +235,7 @@
 									<div class="col-lg-4 col-md-4 col-sm-3 col-xs-1 text-right rules-value-name">
 										<span class="label label-info">Safety Gear</span>
 									</div>
-									<div class="col-lg-8 col-md-8 col-sm-9 col-xs-12 col-md-offset-0 col-sm-offset-0 col-xs-offset-1 text-left rules-value-value">
+									<div class="col-lg-8 col-md-8 col-sm-9 col-xs-12 text-left rules-value-value">
 										<span id="dataField-pdfReq" data-bind="text: pfdReq"></span><br />
 										<span id="dataField-commsEquip"  data-bind="text: commsEquip"></span><br />
 										<span id="dataField-safetyExtras"  data-bind="text: additionalSafety"></span>
@@ -264,50 +267,50 @@
 
 					<!-- BEGIN Data attribution section -->
 					<div class="row text-center bottom-border" id="attributionRow">
-						<div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 text-center">
+						<div class="col-lg-1 col-md-4 col-sm-4 col-xs-12 text-center">
 							<h4 class="attributionHeader">Data from:</h4>
 						</div>
-						<div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 attribution-logo-container text-center center-block">
+						<div class="col-lg-1 col-md-2 col-sm-2 col-xs-6 attribution-logo-container text-center center-block">
 							<a href="https://www.usgs.gov/products/data-and-tools/real-time-data/water" target="_blank">
 								<img class="attribution-logo" src="media/usgs-logo.png" />
 							</a>
 						</div>
-						<div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 attribution-logo-container text-center center-block">
+						<div class="col-lg-1 col-md-2 col-sm-2 col-xs-6 attribution-logo-container text-center center-block">
 							<a href="https://water.weather.gov/ahps/" target="_blank">
 								<img class="attribution-logo" src="media/noaa-logo.png" />
 							</a>
 						
 						</div>
-						<div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 attribution-logo-container text-center center-block">
+						<div class="col-lg-1 col-md-2 col-sm-2 col-xs-6 attribution-logo-container text-center center-block">
 							<a href="https://sunrise-sunset.org" target="_blank">
 								<img class="attribution-logo" src="media/sunrs-logo.png" />
 							</a>
 						</div>
-						<div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 attribution-logo-container text-center center-block">
+						<div class="col-lg-1 col-md-2 col-sm-2 col-xs-6 attribution-logo-container text-center center-block">
 							<a href="http://threeriversrowing.org/safety/weather-and-water-flow/" target="_blank">
 								<img class="attribution-logo" src="media/trra-logo.png" />
 							</a>
 						</div>
 						
-						<div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 text-center">
+						<div class="col-lg-1 col-md-4 col-sm-4 col-xs-12 text-center">
 							<h4 class="attributionHeader">Built with:</h4>
 						</div>
-						<div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 attribution-logo-container text-center center-block">
+						<div class="col-lg-1 col-md-2 col-sm-2 col-xs-12 attribution-logo-container text-center center-block">
 							<a href="https://getbootstrap.com/docs/3.3/" target="_blank">
 								<img class="attribution-logo" src="media/bootstrap-logo.png" />
 							</a>
 						</div>
-						<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 attribution-logo-container text-center center-block">
+						<div class="col-lg-2 col-md-6 col-sm-6 col-xs-12 attribution-logo-container text-center center-block">
 							<a href="http://jquery.com" target="_blank">
 								<img class="attribution-logo" src="media/jquery-logo.png" />
 							</a>
 						</div>
-						<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 attribution-logo-container text-center center-block">
+						<div class="col-lg-2 col-md-6 col-sm-6 col-xs-12 attribution-logo-container text-center center-block">
 							<a href="http://knockoutjs.com/index.html" target="_blank">
 								<img class="attribution-logo" src="media/knockout-logo.png" />
 							</a>
 						</div>
-						<div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 attribution-logo-container text-center center-block">
+						<div class="col-lg-1 col-md-6 col-sm-6 col-xs-12 attribution-logo-container text-center center-block">
 							<a href="http://momentjs.com" target="_blank">
 								<img class="attribution-logo" src="media/moment-logo.png" />
 							</a>

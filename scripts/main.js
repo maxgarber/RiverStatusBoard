@@ -11,7 +11,7 @@ let devMode = false;
 
 //	main block - declare before executing
 let main = function () {
-	$('#attributionRow').slideUp();
+	// $('#attributionRow').slideUp();
 	
 	var viewModel = new AppViewModel();
 	var bindingContext = document.getElementById('koBindingContext');
