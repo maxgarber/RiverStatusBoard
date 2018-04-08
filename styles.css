@@ -182,13 +182,10 @@ span.now-value-units {
 }
 
 .rules-value-row {
-	margin-bottom: 1em;
+	margin-top: 2.5em;
 }
 
-.rules-value-name {
-	margin-top: 0.25em;
-	margin-bottom: 2em;
-}
+.rules-value-name {}
 
 .rules-value-name > span {
 	font-size: 1.25em;
@@ -197,6 +194,7 @@ span.now-value-units {
 .rules-value-value {
 	font-size: 1.25em;
 	padding-left: 0;
+	padding-top: 1em;
 }
 
 .rules-value-value > span {
