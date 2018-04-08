@@ -7,7 +7,7 @@
 //	utility functions
 
 //	rank returns the zone for a value, given a scale
-// TODO: add parameters for L/R inclusivity -- and/or make interval dependent
+//	TODO: add parameters for L/R inclusivity -- and/or make interval dependent
 let rank = function (value, scale) {
 	var r = 0;	// initialize at invalid/below all zones
 	for (z = 1; z <= scale.zoneCount; z++) {
@@ -29,7 +29,6 @@ let daylight = function (sunrise, sunset) {
 };
 
 let semanticColors = {
-	
 	1: '#00c020',		//	green
 	2: '#40fe00',		//	bright green
 	3: '#c8ff00',		//	yellow
@@ -37,7 +36,6 @@ let semanticColors = {
 	5: '#ffa800',		//	orange
 	6: '#ff0000',		//	red
 	7: '#000000'		//	black 
-	
 };
 
 var trra_safety = {
@@ -45,7 +43,7 @@ var trra_safety = {
 	//	utility functions
 	
 	//	rank returns the zone for a value, given a scale
-	// TODO: add parameters for L/R inclusivity -- and/or make interval dependent
+	//	TODO: add parameters for L/R inclusivity -- and/or make interval dependent
 	rank: function (value, scale) {
 		var r = 0;	// initialize at invalid/below all zones
 		for (z = 1; z <= scale.zoneCount; z++) {
@@ -178,7 +176,8 @@ var trra_safety = {
 			addenda: {
 				1: "See TRRA website for links to official gauges for water flow (NOAA data from Sharpsburg gauge -- scroll down for flow and use the most recent \"observed data\" regardless of listed time) and water temperature (USGS data from Acmetonia).",
 				2: {
-					title: "Additional Requirements for Zone 6",
+					title: "Additional Requirements for Zone 6:",
+					count: 7,
 					1: "A meeting and letter must be provided to TRRA before rowing in these conditions. A standard letter can be found on the TRRA website.",
 					2: "Crews must be strong enough to make meaningful progress upstream through the Millvale cut with not more than 3/4's of rowers rowing",
 					3: "Crews must have not less than 2 hours of on-the-water time within the immediately preceding 5-day period",

@@ -8,12 +8,13 @@
 
 /*	General Styles */
 html {
-	background-color: #4c4c55;
+	
 }
 
 body {
 	color: #ffffff;
 	text-shadow: 0 0 5px #444444;
+	background: linear-gradient(#000000, #3c3c45);
 }
 
 /*	Content Layout	*/
@@ -26,29 +27,28 @@ body {
 	
 	width: auto;
 	height: auto;
-		
-	background: linear-gradient(#0e0e0e, #4c4c55);
 }
 
 #container-inner {
 	width: auto;
-	margin-left: 0.5em;
-	margin-right: 0.5em;
-	padding-top: 0.5em;
+	margin-left: 0;
+	margin-right: 0;
+	padding-top: 0;
 }
 
 /*	Rows, Columns, Cells	*/
-#titleRow, #conditionsRow, #graphRow, #attributionRow {
-	color: #ffffff;
-	border-bottom: 1pt solid white;
-	padding-top: 1em;
-	padding-bottom: 2em;
-}
-
 #controlCells {
 	color: #ffffff;
 	padding-left: 0.25em;
 	padding-right: 0.25em;
+}
+
+#controlCells span:hover {
+	text-shadow: 0 0 0.5em white;
+}
+#controlCells span:active {
+	color: #aaaaaa;
+	text-shadow: 0 0 0.5em black;
 }
 
 .controlCellSpacer {
@@ -56,32 +56,74 @@ body {
 	margin-right: 0.5em;
 }
 
-.colTitle {
-	color: white;
-	padding-top: 1em;
+#lastUpdatedCol {
+	padding-top: 0.1em;
+	font-size: 1.5em;
 }
 
-#conditionsRow {
-	padding-bottom: 5em;
+#lastUpdatedLabel {
+	
 }
 
-#copyrightRow {
+#titleRow {
+	padding-top: 0.75em;
+	margin-top: 0.75em;
+	padding-bottom: 0.5em;
+	margin-bottom: 1.5em;
+}
+
+#conditionsRow {}
+
+#footnoteRow {
 	margin-top: 1em;
 }
 
+#graphRow {}
+
+#attributionRow {
+	margin-top: 3em;
+	vertical-align: middle;
+	padding-bottom: 3em;
+	margin-bottom: 2em;
+}
+
+#copyrightRow {
+	padding-top: 3em;
+}
+
 #copyrightRow span {
+	margin-top: 1em;
 	color: #ffffff;
 	font-weight: thin;
 }
 
+#bottom-gutter {
+	height: 5em;
+}
+
+/*	Style modifications	*/
+.bottom-border {
+	color: #ffffff;
+	border-bottom: 1pt solid white;
+	padding-bottom: 2em;
+}
+.top-border {
+	color: #ffffff;
+	border-top: 1pt solid white;
+	padding-top: 2em;
+}
+
+div.row h2 {
+	margin-bottom: 1.5em;
+}
 
 /*	Current ('Now') Styles	*/
 
 .now-value-row {
 	color: white;
 	line-height: 6em;
-	margin-top: 0.25em;
-	vertical-align: middle;
+	margin-bottom: 0.5em;
+	vertical-align: top;
 }
 
 .now-value-name span {
@@ -106,35 +148,40 @@ span.now-value-units {
 	font-weight: normal;
 }
 
-/*	Current Zone's Styles	*/
-#zone-data-container {
-	height: 30em;
-	line-height: 30em;
+/*	current zone styles	*/
+#zoneColTitle {
+	padding-bottom: 2em;
 }
+
+#zone-data-container {}
 
 #dataField-zone {
 	font-size: 16em;
-	font-weight: normal;
-	padding: 0 0.3em 0.05em 0.3em;
-	background-color: #777777;
-	border-radius: 0.15em;
-	vertical-align: middle;
+	font-weight: bolder;
+	padding-left: 0.4em;
+	padding-right: 0.4em;
+	padding-top: 0.1em;
+	padding-bottom: 0.15em;
 }
+
 
 /*	Current Rules' Styles	*/
 
+#rules-data-container {
+	padding-top: 1em;
+}
+
 .rules-value-row {
-	margin-top: 2em;
-	line-height: 2em;
+	margin-bottom: 1em;
 }
 
 .rules-value-name {
-	margin-bottom: 1em;
+	margin-top: 0.25em;
+	margin-bottom: 2em;
 }
 
 .rules-value-name > span {
 	font-size: 1.25em;
-	
 }
 
 .rules-value-value {
@@ -150,11 +197,9 @@ span.now-value-units {
 #graph-data-container {
 	padding-bottom: 5em;
 }
+
 #graphCanvas {
 	height: 15em;
-}
-#graphRow {
-	padding-top: 2em;
 }
 
 /*	Display Customization	*/
@@ -176,32 +221,29 @@ span.now-value-units {
 	color: #f0f0f0;
 }
 
-#conditionsRow {
-	margin-bottom: 5em;
+/*	Attribution styles	*/
+
+#attributionRow > div {
+	display: inline-block;
+	vertical-align: middle;
+	height: 3.5em;
+	max-height: 3.5em;
 }
 
 .attribution-logo-container {
 	display: inline-block;
 	margin: auto;
-	vertical-align: bottom;
-	
-	/*border: 1px dashed white;*/
 }
 
-
 .attribution-logo {
-	display: inline-block;
-	margin: auto;
-	min-height: 2em;
-	max-height: 3em;
+	height: 3.5em;
+	max-height: 3.5em;
 }
 
 .attributionHeader {
 	color: #ffffff;
 	font-weight: bold;
 	padding-top: 0.5em;
-	
-	/*border: 1px dashed yellow;*/
 }
 
 .attributionBody {
@@ -210,21 +252,12 @@ span.now-value-units {
 	padding-bottom: 1.5em;
 }
 
-
-
-#bottom-gutter {
-	height: 5em;
-}
-
 /*	Debugging Styles	*/
-.dashedBorder {
+
+.dashed-border {
 	border: 1px dashed white;
 }
 
-.vcenter {
-	position: absolute;
-	top: 50%;
-	left: 50%;
-}
+#attributionRow > div {}
 
 /* EOF */

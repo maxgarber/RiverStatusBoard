@@ -11,6 +11,8 @@ let devMode = false;
 
 //	main block - declare before executing
 let main = function () {
+	$('#attributionRow').slideUp();
+	
 	var viewModel = new AppViewModel();
 	var bindingContext = document.getElementById('koBindingContext');
 	ko.applyBindings(viewModel, bindingContext);
@@ -20,6 +22,14 @@ let main = function () {
 	window.autoRefresher = setInterval(function () {
 		window.vm.update();
 	}, 1000*60*15);
+	
+	//	set last-updated stuff
+	$('#refresh-button').mouseover(function () {
+		window.vm.lastUpdatedVisible(true);
+	});
+	$('#refresh-button').mouseout(function () {
+		window.vm.lastUpdatedVisible(false);
+	});
 	
 	if (viewModel.graphEnabled()) {
 		setupGraphStructures();

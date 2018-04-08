@@ -14,6 +14,16 @@ var AppViewModel = function () {
 	
 	this.referenceToAppViewModel = this;
 	
+	//	compartmentalize … tbd
+	var controller = {};
+	var waterData = {};
+	var airData = {};
+	var sunData = {};
+	
+	// bookkeeping
+	this.lastUpdatedVisible = ko.observable(false);
+	this.lastUpdated = ko.observable('');
+	
 	// @section Water: Flow, Level, Temperature
 	this.waterFlow = ko.observable(this._initString);
 	this.waterFlowUnits = ko.observable("kcfs");
@@ -120,6 +130,25 @@ var AppViewModel = function () {
 		}
 	}, this);
 	
+	this.footnoteVisible = ko.computed(function () {
+		let zone = this.zone();
+		return (zone > 5);
+	}, this);
+	
+	this.footnoteHtml = ko.computed(function () {
+		let zone = this.zone();
+		if (zone < 6) { return ""; }
+		
+		let addendum = trra_safety.rowing.matrix.addenda[2];
+		var html = "";
+		html += '<h4>' + addendum.title + '</h4>';
+		for (var i = 1; i < addendum.count; i++) {
+			var sp = '<span class="footnote">[' + i + '] &nbsp;' + addendum[i] + '</span><br />';
+			html += sp + '\n';
+		}
+		return html;
+	}, this);
+	
 	// experimental
 	this.safetyInfoForCategoryAndZone = function (category, zone) {
 		let categoryEntry = trra_safety.rowing.matrix[category][zone];
@@ -129,8 +158,8 @@ var AppViewModel = function () {
 	// @section controlElements' functions
 	this.toggleAttribution = function () {
 		$('#attributionRow').slideToggle();
-		let y = $('#attributionRow').position().top;
-		window.scrollTo(0,y*1.1);
+		// let y = $('#attributionRow').position().top;
+		// window.scrollTo(0,y*1.1);
 	};
 	
 	this.manualRefresh = function () {
@@ -198,6 +227,9 @@ var AppViewModel = function () {
 		
 		apiConcierge.getValueAsync('sunrise', this.sunrise);
 		apiConcierge.getValueAsync('sunset', this.sunset);
+		
+		let now = moment().format("h:mm a");
+		this.lastUpdated(now);
 		
 		return true;
 	};
