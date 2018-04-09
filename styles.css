@@ -8,12 +8,18 @@
 
 /*	General Styles */
 html {
+	background: #000000;
 }
 
 body {
 	color: #ffffff;
 	text-shadow: 0 0 5px #444444;
-	background: linear-gradient(#000000, #3c3c45);
+	
+	/*background: rgb(60,60,69);
+	background: -moz-linear-gradient(top, rgba(60,60,69,1) 0%, rgba(0,0,0,1) 100%);
+	background: -webkit-linear-gradient(top, rgba(60,60,69,1) 0%,rgba(0,0,0,1) 100%);
+	background: linear-gradient(to bottom, rgba(60,60,69,1) 0%,rgba(0,0,0,1) 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3c3c45', endColorstr='#000000',GradientType=0 );*/
 }
 
 /*	Content Layout	*/
@@ -23,6 +29,8 @@ body {
 	bottom: 0;
 	left: 0;
 	right: 0;
+	
+	background-image: linear-gradient(to bottom, #3c3c4f, #000000);
 	
 	width: auto;
 	height: auto;
