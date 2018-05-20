@@ -14,12 +14,6 @@ html {
 body {
 	color: #ffffff;
 	text-shadow: 0 0 5px #444444;
-	
-	/*background: rgb(60,60,69);
-	background: -moz-linear-gradient(top, rgba(60,60,69,1) 0%, rgba(0,0,0,1) 100%);
-	background: -webkit-linear-gradient(top, rgba(60,60,69,1) 0%,rgba(0,0,0,1) 100%);
-	background: linear-gradient(to bottom, rgba(60,60,69,1) 0%,rgba(0,0,0,1) 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3c3c45', endColorstr='#000000',GradientType=0 );*/
 }
 
 /*	Content Layout	*/
@@ -177,7 +171,7 @@ span.now-value-units {
 	font-weight: bolder;
 	padding-left: 0.3em;
 	padding-right: 0.3em;
-	padding-top: 0.075em;
+	padding-top: 0;
 	padding-bottom: 0.05em;
 }
 
