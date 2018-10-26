@@ -127,7 +127,7 @@ var setupGraphStructures = function () {
 		position: "left",
 		gridLines: { display: false },
 		ticks: {
-			min: 5,
+			min: 0,
 			max: 20
 		},
 		scaleLabel: {

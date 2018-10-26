@@ -7,7 +7,7 @@ var AppViewModel = function () {
 	
 	//	Dev/Debug properties
 	this.devMode = true;
-	this.graphEnabled = ko.observable(false);
+	this.graphEnabled = ko.observable(true);
 	
 	// static, private
 	this._initString = ' ';
@@ -73,6 +73,22 @@ var AppViewModel = function () {
 		} else {
 			return this._initString;
 		}
+	}, this);
+	
+	this.daylight = ko.computed(function() {
+		if (moment != null) {
+			var now = moment();
+			var afterDawn = now.isAfter(this.sunrise());
+			var beforeDusk = now.isBefore(this.sunset());
+			return (afterDawn && beforeDusk);
+		} else {
+			return this._initString;
+		}
+	}, this);
+	
+	this.daylightDisplay = ko.computed(function() {
+		let daylight = this.daylight();
+		return daylight? '*Daylight shift' : '';
 	}, this);
 	
 	// @section Internal-Private
@@ -154,6 +170,18 @@ var AppViewModel = function () {
 		let categoryEntry = trra_safety.rowing.matrix[category][zone];
 		return categoryEntry;
 	};
+	
+	this.waterTempNote = ko.computed(function () {
+		if (this.waterTempF() < -10) {
+			return "Equipment malfunction";
+		} else {
+			return '';
+		}
+	}, this);
+	
+	this.waterTempNoteVisible = ko.computed(function () {
+		return (this.waterTempNote() != '');
+	}, this);
 	
 	// @section controlElements' functions
 	this.toggleAttribution = function () {

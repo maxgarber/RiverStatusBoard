@@ -76,15 +76,23 @@
 						<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 text-center">
 							<h1>Allegheny River Conditions</h1>
 						</div>
-						<div class="col-lg-1 col-md-1 col-sm-0 col-xs-0 text-right" id="lastUpdatedCol">
+						<div class="col-lg-1 col-md-1 col-sm-0 col-xs-0 text-right"
+						id="lastUpdatedCol">
 							<span class="" data-bind="visible: lastUpdatedVisible">updated:</span>
-							<span class="label label-default" id="lastUpdatedLabel" data-bind="{ visible: lastUpdatedVisible, text: lastUpdated }"></span>
+							<span class="label label-default" id="lastUpdatedLabel" data-bind="{
+								visible: lastUpdatedVisible,
+								text: lastUpdated
+							}"></span>
 						</div>
-						<div class="col-lg-2 col-md-3 col-sm-12 col-xs-12 text-center" id="controlCells">
+						<div class="col-lg-2 col-md-3 col-sm-12 col-xs-12 text-center"
+							id="controlCells">
 							<h2>
-								<span class="glyphicon glyphicon-refresh controlElement" id="refresh-button" data-bind="click: manualRefresh"></span>
+								<span class="glyphicon glyphicon-refresh controlElement"
+								id="refresh-button" data-bind="click: manualRefresh"></span>
 								<span class="controlCellSpacer"></span>
-								<span class="glyphicon glyphicon-info-sign controlElement" id="attribution-info-toggle" data-bind="click: toggleAttribution"></span>
+								<span class="glyphicon glyphicon-info-sign controlElement"
+								id="attribution-info-toggle"
+								data-bind="click: toggleAttribution"></span>
 							</h2>
 						</div>
 					</div>
@@ -103,7 +111,7 @@
 										<span>Flow</span>
 									</div>
 									<div class="col-lg-8 col-md-8 col-sm-6 col-xs-8 text-left now-value-value">
-										<span class="label label-default" id="dataField-flow" 
+										<span class="label label-default" id="dataField-flow"
 											data-bind="{ text: waterFlow, style: { 'background-color': waterFlowColor } }"></span>
 										<span class="now-value-units" data-bind="text: waterFlowUnits"></span>
 									</div>
@@ -124,6 +132,10 @@
 											<span class="label label-default" id="dataField-temp"
 												data-bind="{ text: waterTempF, style: { 'background-color': waterTempColor } }"></span>
 											<span class="now-value-units">˚F</span>
+										</div>
+										<div class="waterTempAndUnitsDiv" id="dataField-note" data-bind="visible: waterTempNoteVisible">
+											<span class="glyphicon glyphicon-alert" style="color: yellow;"></span>
+											<span class="dataNote" id="dataField-tempNote" data-bind="text: waterTempNote"></span>
 										</div>
 									</div>
 								</div>
@@ -188,6 +200,13 @@
 									<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 										<span class="label label-default" id="dataField-zone"
 											data-bind="{ text: zoneDisplay, style: { 'background-color': zoneColor } }">
+										</span>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+										<span class="label label-default" id="dataField-daylight"
+											data-bind="text: daylightDisplay">
 										</span>
 									</div>
 								</div>
@@ -259,18 +278,18 @@
 					</div>
 					<!-- END footnote for zone 6 -->
 					
-					<!-- BEGIN Recent Conditions Graph Row --
+					<!-- BEGIN Recent Conditions Graph Row -->
 					
-					<div class="row center-block" id="graphRow" data-bind="visible: graphEnabled">
-						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center" id="graphRow">
+					<div class="row text-center center-block" id="graphRow" data-bind="visible: graphEnabled">
+						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center center-block">
 							<h2>Recent Conditions</h2>
 							<div class="graph-data-container">
-								<canvas id="graphCanvas"></canvas>
+								<canvas id="graphCanvas" class="center-block"></canvas>
 							</div>
 						</div>
 					</div>
 					 
-					!-- END Recent Conditions Graph Row -->
+					<!-- END Recent Conditions Graph Row -->
 
 					<!-- BEGIN Data attribution section -->
 					<div class="row text-center bottom-border" id="attributionRow">

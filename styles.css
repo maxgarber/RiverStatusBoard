@@ -83,7 +83,9 @@ body {
 	padding-right: 1em;
 }
 
-#graphRow {}
+#graphRow {
+	color: #ffffff;
+}
 
 #attributionRow {
 	margin-top: 3em;
@@ -156,6 +158,11 @@ span.now-value-units {
 	font-weight: normal;
 }
 
+span.dataNote {
+	font-size: 1.5em;
+	font-weight: bolder;
+}
+
 /*	current zone styles	*/
 #zoneColTitle {
 	padding-bottom: 2em;
@@ -207,10 +214,13 @@ span.now-value-units {
 /*	Graph styles	*/
 #graph-data-container {
 	padding-bottom: 5em;
+
 }
 
 #graphCanvas {
 	height: 15em;
+	max-width: 110em;
+	
 }
 
 /*	Display Customization	*/

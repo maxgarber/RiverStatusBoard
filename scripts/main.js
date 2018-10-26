@@ -7,7 +7,7 @@
 
 
 //	dev/debug stuff here
-let devMode = false;
+let devMode = true;
 
 //	main block - declare before executing
 let main = function () {
