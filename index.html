@@ -129,13 +129,13 @@
 										</div>
 										<!-- now show it in fahrenheit for the rubes -->
 										<div class="waterTempAndUnitsDiv">
-											<span class="label label-default" id="dataField-temp"
+											<span class="label label-default" id="dataField-tempF"
 												data-bind="{ text: waterTempF, style: { 'background-color': waterTempColor } }"></span>
 											<span class="now-value-units">˚F</span>
 										</div>
 										<div class="waterTempAndUnitsDiv" id="dataField-note" data-bind="visible: waterTempNoteVisible">
 											<span class="glyphicon glyphicon-alert" style="color: yellow;"></span>
-											<span class="dataNote" id="dataField-tempNote" data-bind="text: waterTempNote"></span>
+											<span class="dataNote" id="dataField-tempNote" data-bind="html: waterTempNote"></span>
 										</div>
 									</div>
 								</div>
@@ -205,7 +205,7 @@
 								</div>
 								<div class="row">
 									<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-										<span class="label label-default" id="dataField-daylight"
+										<span class="label label-warning" id="dataField-daylight"
 											data-bind="text: daylightDisplay">
 										</span>
 									</div>

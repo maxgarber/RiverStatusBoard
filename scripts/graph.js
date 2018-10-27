@@ -41,7 +41,7 @@ let selectors = {
 	currentTemp: '#temp'
 };
 
-let flowAndFloodSourceURI = "https://water.weather.gov/ahps2/hydrograph_to_xml.php?gage=shrp1&output=xml";
+let flowAndFloodSourceURI = "https://water.weather.gov/ahps2/hydrograph_to_xml.php?gage=shrp1&output=xml&time_zone=edt";
 let temperatureSourceURI = "https://waterservices.usgs.gov/nwis/iv/";
 let flowAndFloodParameters = {
 	gage: 'shrp1',
@@ -98,7 +98,10 @@ var setupGraphStructures = function () {
 				day: 'DD',
 				hour: 'ddd ha',
 				minute: 'mm'
-			}
+			},
+			stepSize: 10,
+			bounds: 'data',
+			ticks: 'data'
 		}
 	};
 	yAxis_flow = {
@@ -243,12 +246,12 @@ var parseFlowAndFloodData = function (data) {
 	for(i = 0; i < observedDataN; i++) {
 		var datum = $(observedData).get(i);
 		var datetime = $(datum).children('valid').text();
-		datetime = datetime.substr(0,16);
+		//datetime = datetime.substr(0,16);
 		var flood = $(datum).children('primary').text();
 		var flow = $(datum).children('secondary').text();
 		var aMoment = moment(datetime);
 		moments.observed[i] = aMoment;
-		abscissa.observed[i] = datetime;
+		abscissa.observed[i] = aMoment;
 		ordinates.observed.flood[i] = Number.parseFloat(flood);
 		ordinates.observed.flow[i] = Number.parseFloat(flow);
 	}
@@ -257,12 +260,12 @@ var parseFlowAndFloodData = function (data) {
 	for(i = 0; i < forecastDataN; i++) {
 		var datum = $(forecastData).get(i);
 		var datetime = $(datum).children('valid').text();
-		datetime = datetime.substr(0,16);
+		//datetime = datetime.substr(0,16);
 		var flood = $(datum).children('primary').text();
 		var flow = $(datum).children('secondary').text();
 		var aMoment = moment(datetime);
 		moments.forecast.push(aMoment);
-		abscissa.forecast.push(datetime);
+		abscissa.forecast.push(aMoment);
 		ordinates.forecast.flood[i] = Number.parseFloat(flood);
 		ordinates.forecast.flood[i] = Number.parseFloat(flow);
 	}

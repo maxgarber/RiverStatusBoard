@@ -86,11 +86,6 @@ var AppViewModel = function () {
 		}
 	}, this);
 	
-	this.daylightDisplay = ko.computed(function() {
-		let daylight = this.daylight();
-		return daylight? '*Daylight shift' : '';
-	}, this);
-	
 	// @section Internal-Private
 	this._updated = ko.computed(function () {
 		var updated = true;
@@ -146,6 +141,12 @@ var AppViewModel = function () {
 		}
 	}, this);
 	
+	this.daylightDisplay = ko.computed(function() {
+		let daylight = this.daylight();
+		let shifted = (this.zone() > 1 && this.zone() < 6);
+		return (daylight && shifted)? 'Daylight Shifted' : '';
+	}, this);
+	
 	this.footnoteVisible = ko.computed(function () {
 		let zone = this.zone();
 		return (zone > 5);
@@ -173,7 +174,9 @@ var AppViewModel = function () {
 	
 	this.waterTempNote = ko.computed(function () {
 		if (this.waterTempF() < -10) {
-			return "Equipment malfunction";
+			document.querySelector('#dataField-temp').parentElement.hidden = true;
+			document.querySelector('#dataField-tempF').parentElement.hidden = true;
+			return '<a href="https://www.usgs.gov/news/usgs-working-restore-streamgages">USGS equipment malfunction</a>';
 		} else {
 			return '';
 		}
