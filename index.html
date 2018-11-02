@@ -39,10 +39,10 @@
 		<script src="./scripts/libs/Chart-2.6.0.min.js"></script>
 		
 		<!-- custom API management scheme -->
-		<script src="./scripts/apiClients/gov.weather.js"></script>
+		<script src="./scripts/apiClients/gov.weather.water.js"></script>
 		<script src="./scripts/apiClients/gov.usgs.js"></script>
 		<script src="./scripts/apiClients/org.sunrise-sunset.js"></script>
-		<script src="./scripts/apiClients/org.openweathermap.js"></script>
+		<script src="./scripts/apiClients/gov.weather.w1.js"></script>
 		<script src="./scripts/apiConcierge.js"></script>
 		
 		<!-- TRRA dashbaord functions -->
@@ -54,7 +54,7 @@
 		<script src="./scripts/graph.js"></script>
 		
 		<!-- Custom Styles -->
-		<link rel="stylesheet" type="text/css" href="./styles.css">
+		<link rel="stylesheet" type="text/css" href="./styles/main.css">
 		
 		<!-- Bootstrap -->
 		<link href="./lib/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
@@ -102,7 +102,7 @@
 					<div class="row bottom-border" id="conditionsRow">
 						
 						<!-- BEGIN Current Values Table -->
-						<div class="col-lg-4 col-md-6 col-sm-12 col-xs-12 text-center">
+						<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 text-center">
 							<h2>Now</h2>
 							<div id="now-data-container" class="container-fluid">
 								<!-- flow rate -->
@@ -127,7 +127,7 @@
 												data-bind="{ text: waterTemp, style: { 'background-color': waterTempColor }}"></span>
 											<span class="now-value-units" data-bind="text: waterTempUnits"></span>
 										</div>
-										<!-- now show it in fahrenheit for the rubes -->
+										<!-- now show it in fahrenheit for the rubes --><br />
 										<div class="waterTempAndUnitsDiv">
 											<span class="label label-default" id="dataField-tempF"
 												data-bind="{ text: waterTempF, style: { 'background-color': waterTempColor } }"></span>
@@ -157,6 +157,9 @@
 									<div class="col-lg-8 col-md-8 col-sm-6 col-xs-9 text-left now-value-value">
 										<span class="label label-default" id="dataField-air" data-bind="text: airTemp"></span>
 										<span class="now-value-units" data-bind="text: airTempUnits"></span>
+										<!-- Fahrenheit for the rubbes --><br />
+										<span class="label label-default" id="dataField-airF" data-bind="text: airTempF"></span>
+										<span class="now-value-units" data-bind="text: airTempUnitsF"></span>
 									</div>
 								</div>
 								<!-- wind -->
@@ -193,7 +196,7 @@
 						<!-- END Current Values Table -->
 					
 						<!-- BEGIN Current Zone Display -->
-						<div class="col-lg-4 col-md-6 col-sm-12 col-xs-12 text-center center-block">
+						<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 text-center center-block">
 							<h2 id="zoneColTitle">Zone</h2>
 							<div class="container-fluid" id="zone-data-container">
 								<div class="row">
@@ -210,56 +213,60 @@
 										</span>
 									</div>
 								</div>
+								<div class="row" id="footnoteRow" data-bind="visible: footnoteVisible">
+									<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" data-bind="html: footnoteHtml">
+									</div>
+								</div>
 							</div>
 						</div>
 						<!-- END Current Zone Display -->
 					
 						<!-- BEGIN Safety Values Table -->
-						<div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 text-center">
+						<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 text-center">
 							<h2>Safety Rules</h2>
 							<div class="container-fluid" id="rules-data-container">
 								<!-- shell types -->
 								<div class="row rules-value-row">
-									<div class="col-lg-4 col-md-4 col-sm-3 col-xs-1 text-right rules-value-name">
+									<div class="col-lg-4 col-md-6 col-sm-4 col-xs-2 text-right rules-value-name">
 										<span class="label label-info">Shell Types</span>
 									</div>
-									<div class="col-lg-8 col-md-8 col-sm-9 col-xs-12 text-left rules-value-value">
+									<div class="col-lg-8 col-md-6 col-sm-8 col-xs-12 text-left rules-value-value">
 										<span id="dataField-shells" data-bind="text: shellTypes"></span>
 									</div>
 								</div>
 								<!-- crew skill level -->
 								<div class="row rules-value-row">
-									<div class="col-lg-4 col-md-4 col-sm-3 col-xs-1 text-right rules-value-name">
+									<div class="col-lg-4 col-md-6 col-sm-4 col-xs-2 text-right rules-value-name">
 										<span class="label label-info">Skill Level</span>
 									</div>
-									<div class="col-lg-8 col-md-8 col-sm-9 col-xs-12 text-left rules-value-value">
+									<div class="col-lg-8 col-md-6 col-sm-8 col-xs-12 text-left rules-value-value">
 										<span id="dataField-skill"  data-bind="text: crewSkill"></span>
 									</div>
 								</div>
 								<!-- coaches' launch:shell ratio -->
 								<div class="row rules-value-row">
-									<div class="col-lg-4 col-md-4 col-sm-3 col-xs-1 text-right rules-value-name">
+									<div class="col-lg-4 col-md-6 col-sm-4 col-xs-2 text-right rules-value-name">
 										<span class="label label-info">Launches</span>
 									</div>
-									<div class="col-lg-8 col-md-8 col-sm-9 col-xs-12 text-left rules-value-value">
+									<div class="col-lg-8 col-md-6 col-sm-8 col-xs-12 text-left rules-value-value">
 										<span id="dataField-launches" data-bind="text: launchRatio"></span>
 									</div>
 								</div>
 								<!-- coach certification -->
 								<div class="row rules-value-row">
-									<div class="col-lg-4 col-md-4 col-sm-3 col-xs-1 text-right rules-value-name">
+									<div class="col-lg-4 col-md-6 col-sm-4 col-xs-2 text-right rules-value-name">
 										<span class="label label-info">Coaches</span>
 									</div>
-									<div class="col-lg-8 col-md-8 col-sm-9 col-xs-12 text-left rules-value-value">
+									<div class="col-lg-8 col-md-6 col-sm-8 col-xs-12 text-left rules-value-value">
 										<span id="dataField-coaches" data-bind="text: coachCert"></span>
 									</div>
 								</div>
 								<!-- safety gear/equipment -->
 								<div class="row rules-value-row">
-									<div class="col-lg-4 col-md-4 col-sm-3 col-xs-1 text-right rules-value-name">
+									<div class="col-lg-4 col-md-6 col-sm-4 col-xs-2 text-right rules-value-name">
 										<span class="label label-info">Safety Gear</span>
 									</div>
-									<div class="col-lg-8 col-md-8 col-sm-9 col-xs-12 text-left rules-value-value">
+									<div class="col-lg-8 col-md-6 col-sm-8 col-xs-12 text-left rules-value-value">
 										<span id="dataField-pdfReq" data-bind="text: pfdReq"></span><br />
 										<span id="dataField-commsEquip"  data-bind="text: commsEquip"></span><br />
 										<span id="dataField-safetyExtras"  data-bind="text: additionalSafety"></span>
@@ -272,18 +279,18 @@
 					</div>
 					<!--  END Current Conditions & Rules Row -->
 					
-					<!-- BEGIN Footnote for zone 6 -->
+					<!-- BEGIN Footnote for zone 6
 					<div class="row bottom-border" id="footnoteRow" data-bind="visible: footnoteVisible">
 						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" data-bind="html: footnoteHtml"></div>
 					</div>
-					<!-- END footnote for zone 6 -->
+						 END footnote for zone 6 -->
 					
 					<!-- BEGIN Recent Conditions Graph Row -->
 					
 					<div class="row text-center center-block" id="graphRow" data-bind="visible: graphEnabled">
 						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center center-block">
 							<h2>Recent Conditions</h2>
-							<div class="graph-data-container">
+							<div class="graph-data-container text-center center-block">
 								<canvas id="graphCanvas" class="center-block"></canvas>
 							</div>
 						</div>

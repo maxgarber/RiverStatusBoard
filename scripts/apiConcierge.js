@@ -15,9 +15,9 @@ let mockData = {
 };
 
 let apiClients = {
-	'weather.gov': gov_weather,
+	'water.weather.gov': gov_weather_water,
+	'w1.weather.gov': gov_weather_w1,
 	'usgs.gov': gov_usgs,
-	'openweather.org': org_openweathermap,
 	'sunrise-sunset.org': org_sunrise_sunset
 };
 
@@ -33,20 +33,20 @@ let apiConcierge = {
 	
 	// for an API domain, which apiClient
 	clientMap: {
-		'weather.gov': gov_weather,
+		'water.weather.gov': gov_weather_water,
+		'w1.weather.gov': gov_weather_w1,
 		'usgs.gov': gov_usgs,
-		'openweather.org': org_openweathermap,
 		'sunrise-sunset.org': org_sunrise_sunset
 	},
 	
 	// for a value, which API domain
 	accessorMap: {
-		'waterFlow': gov_weather.getWaterFlow,
-		'waterLevel': gov_weather.getWaterLevel,
+		'waterFlow': gov_weather_water.getWaterFlow,
+		'waterLevel': gov_weather_water.getWaterLevel,
 		'waterTemp': gov_usgs.getWaterTemp,
-		'airTemp': org_openweathermap.getAirTemp,
-		'airSpeed': org_openweathermap.getAirSpeed,
-		'airDirxn': org_openweathermap.getAirDirxn,
+		'airTemp': gov_weather_w1.getAirTemp,
+		'airSpeed': gov_weather_w1.getAirSpeed,
+		'airDirxn': gov_weather_w1.getAirDirxn,
 		'sunrise': org_sunrise_sunset.getSunrise,
 		'sunset': org_sunrise_sunset.getSunset
 	},

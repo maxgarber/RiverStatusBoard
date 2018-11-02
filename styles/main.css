@@ -78,13 +78,30 @@ body {
 #conditionsRow {}
 
 #footnoteRow {
-	margin-top: 1em;
-	padding-left: 1em;
-	padding-right: 1em;
+	margin-top: 5em;
+	padding-left: 3em;
+	padding-right: 3em;
+	text-align: justify;
+}
+
+#footnoteRow .footnoteHeader {
+	text-decoration: underline;
+}
+
+#footnoteRow .footnote {
+	margin-bottom: -0.5em;
 }
 
 #graphRow {
 	color: #ffffff;
+}
+
+.graph-data-container {
+	width: 80vw;
+	min-width: 33em;
+	height: 35vw;
+	min-height: 25em;
+	padding: auto;
 }
 
 #attributionRow {
@@ -205,6 +222,7 @@ span.dataNote > a:hover {
 
 .rules-value-row {
 	margin-top: 2.5em;
+	display: block;
 }
 
 .rules-value-name {
@@ -229,13 +247,12 @@ span.dataNote > a:hover {
 /*	Graph styles	*/
 #graph-data-container {
 	padding-bottom: 5em;
-
+	overflow-x: scroll;
 }
 
 #graphCanvas {
 	height: 15em;
 	max-width: 110em;
-	
 }
 
 /*	Display Customization	*/

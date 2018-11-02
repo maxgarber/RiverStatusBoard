@@ -116,7 +116,7 @@ var trra_safety = {
 		
 			launchToShellRatio: {
 				1: "Not a requirement",
-				2: "Not a requirement unless rowing in Zone 3 daylight conditions when Zone 3 requirements should be followed",
+				2: "Not a requirement",
 				3: "1 launch per 2 shells (of equal speed)",
 				4: "1 launch per 2 shells (of equal speed)",
 				5: "1 launch per shell",

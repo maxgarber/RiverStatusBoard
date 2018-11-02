@@ -43,4 +43,5 @@ window.onload = function () {
 	main();
 	window.vm.update();
 }
+
 // EOF

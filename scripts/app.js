@@ -50,9 +50,19 @@ var AppViewModel = function () {
 	}, this);
 	
 	// @section Air: Wind, Temperature
-	this.airPropertiesEnabled = ko.observable(false);
+	this.airPropertiesEnabled = ko.observable(true);
 	this.airTemp = ko.observable(this._initString);
 	this.airTempUnits = ko.observable("˚C");
+	this.airTempF = ko.computed(function() {
+		let tempC = this.airTemp();
+		var tempF = '';
+		if (tempC != null && tempC != this._initString) {
+			tempF = (tempC * (9/5)) + 32;
+			tempF = tempF.toFixed(1);
+		}
+		return tempF;
+	}, this);
+	this.airTempUnitsF = ko.observable("˚F");
 	this.airSpeed = ko.observable(this._initString);
 	this.airSpeedUnits = ko.observable("mph");
 	this.airDirxn = ko.observable(this._initString);
@@ -158,9 +168,9 @@ var AppViewModel = function () {
 		
 		let addendum = trra_safety.rowing.matrix.addenda[2];
 		var html = "";
-		html += '<h4>' + addendum.title + '</h4>';
+		html += '<h4 class="footnoteHeader">' + addendum.title + '</h4>';
 		for (var i = 1; i < addendum.count; i++) {
-			var sp = '<span class="footnote">[' + i + '] &nbsp;' + addendum[i] + '</span><br />';
+			var sp = '<p class="footnote"><strong>[' + i + ']</strong> &nbsp;' + addendum[i] + '</p><br />';
 			html += sp + '\n';
 		}
 		return html;
@@ -210,9 +220,18 @@ var AppViewModel = function () {
 		return shells;
 	}, this);
 	this.launchRatio = ko.computed(function () {
+		if (!this._readyToComputeZone()) { return ''; }
+
 		let zone = this.zone();
-		let launchRatio = trra_safety.rowing.matrix.launchToShellRatio[zone];
-		return launchRatio;
+		let daylight = this.daylight();
+		var launchToShellRatio = '';
+		// if we are in zone 2 because of daylight, we use zone 3 launch:shell ratio
+		if (zone == 2 && this.daylight()) {
+			launchToShellRatio += trra_safety.rowing.matrix.launchToShellRatio[zone] + ' [Zone 3 Rule]';
+		} else {
+			launchToShellRatio += trra_safety.rowing.matrix.launchToShellRatio[zone];
+		}
+		return launchToShellRatio;
 	}, this);
 	this.coachCert = ko.computed(function () {
 		let zone = this.zone();
@@ -255,6 +274,9 @@ var AppViewModel = function () {
 		// getAirTemp(this.airTemp);
 		// getAirSpeed(this.airSpeed);
 		// getAirDirxn(this.airDirxn);
+		apiConcierge.getValueAsync('airTemp', this.airTemp);
+		apiConcierge.getValueAsync('airSpeed', this.airSpeed);
+		apiConcierge.getValueAsync('airDirxn', this.airDirxn);
 		
 		apiConcierge.getValueAsync('sunrise', this.sunrise);
 		apiConcierge.getValueAsync('sunset', this.sunset);

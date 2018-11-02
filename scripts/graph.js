@@ -149,9 +149,9 @@ var setupGraphStructures = function () {
 			min: 0,
 			max: 30,
 			stepSize: 10,
-			callback: function (label, index, labels) {
-					return label+"˚C (" + toFahrenheit(Number.parseFloat(label)) + "˚F)";
-			}
+			// callback: function (label, index, labels) {
+			// 		return label + "˚C | " + toFahrenheit(Number.parseFloat(label)) + "˚F";
+			// }
 		},
 		scaleLabel: {
 			display: true,
