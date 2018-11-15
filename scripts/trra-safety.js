@@ -141,7 +141,7 @@ var trra_safety = {
 				4: "PFDs on all rowers & coxswains",
 				5: "PFDs on all rowers & coxswains",
 				6: "PFDs on all rowers & coxswains",
-				7: "Don't need any where you're staying: on land"
+				7: "Don't need any to stay on land"
 			},
 		
 			commRequirement: {

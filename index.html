@@ -12,21 +12,12 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		
-		<!-- Content Security Policies: I don't know how these work yet, so I'm not enabling them
-		<meta http-equiv="Content-Security-Policy" content="default-src http://api.openweathermap.org; child-src 'none'; object-src 'none'">
-		<meta http-equiv="Content-Security-Policy" content="default-src http://maxgarber.github.io; child-src 'none'; object-src 'none'">
-		-->
-		
 		<title>River Status Board</title>
 		<!-- [fav]icons -->
 		<link rel="icon" type="image/png" href="./favicon_32.png" sizes="32x32">
 		<link rel="apple-touch-icon" type="image/png" href="./favicon_512.png"
 			sizes="57x57 114x114 72x72 144x144 60x60 120x120 76x76 152x152 180x180"
 		>
-		
-		<!-- RequireJS
-			<script data-main="./scripts/main" src="./scripts/require-2.3.3.js"></script>
-		-->
 		
 		<!-- jQuery -->
 		<script src="./scripts/libs/jquery-3.2.1.min.js"></script>
@@ -50,8 +41,8 @@
 		
 		<!-- the app itself -->
 		<script src="./scripts/app.js"></script>
-		<script src="./scripts/main.js"></script>
 		<script src="./scripts/graph.js"></script>
+		<script src="./scripts/main.js"></script>
 		
 		<!-- Custom Styles -->
 		<link rel="stylesheet" type="text/css" href="./styles/main.css">
@@ -72,38 +63,18 @@
 					
 					<!-- BEGIN Title Row -->
 					<div class="row bottom-border" id="titleRow">
-						<div class="col-lg-3 col-md-3 col-sm-0 col-xs-0 text-left"></div>
-						<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 text-center">
-							<h1>Allegheny River Conditions</h1>
-						</div>
-						<div class="col-lg-1 col-md-1 col-sm-0 col-xs-0 text-right"
-						id="lastUpdatedCol">
-							<span class="" data-bind="visible: lastUpdatedVisible">updated:</span>
-							<span class="label label-default" id="lastUpdatedLabel" data-bind="{
-								visible: lastUpdatedVisible,
-								text: lastUpdated
-							}"></span>
-						</div>
-						<div class="col-lg-2 col-md-3 col-sm-12 col-xs-12 text-center"
-							id="controlCells">
-							<h2>
-								<span class="glyphicon glyphicon-refresh controlElement"
-								id="refresh-button" data-bind="click: manualRefresh"></span>
-								<span class="controlCellSpacer"></span>
-								<span class="glyphicon glyphicon-info-sign controlElement"
-								id="attribution-info-toggle"
-								data-bind="click: toggleAttribution"></span>
-							</h2>
+						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
+							<h1 class="white">Allegheny River Conditions</h1>
 						</div>
 					</div>
 					<!-- END Title Row -->
 					
 					<!--  BEGIN Current Conditions, Zone, & Rules Row -->
-					<div class="row bottom-border" id="conditionsRow">
+					<div class="row" id="conditionsRow">
 						
 						<!-- BEGIN Current Values Table -->
 						<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 text-center">
-							<h2>Now</h2>
+							<h2 class="white">Now</h2>
 							<div id="now-data-container" class="container-fluid">
 								<!-- flow rate -->
 								<div class="row now-value-row">
@@ -151,10 +122,10 @@
 								</div>
 								<!-- air temperature -->
 								<div class="row now-value-row" data-bind="visible: airPropertiesEnabled">
-									<div class="col-lg-4 col-md-4 col-sm-6 col-xs-3 text-right now-value-name">
+									<div class="col-lg-4 col-md-4 col-sm-6 col-xs-4 text-right now-value-name">
 										<span>Air</span>
 									</div>
-									<div class="col-lg-8 col-md-8 col-sm-6 col-xs-9 text-left now-value-value">
+									<div class="col-lg-8 col-md-8 col-sm-6 col-xs-8 text-left now-value-value">
 										<span class="label label-default" id="dataField-air" data-bind="text: airTemp"></span>
 										<span class="now-value-units" data-bind="text: airTempUnits"></span>
 										<!-- Fahrenheit for the rubbes --><br />
@@ -164,10 +135,10 @@
 								</div>
 								<!-- wind -->
 								<div class="row now-value-row" data-bind="visible: airPropertiesEnabled">
-									<div class="col-lg-4 col-md-4 col-sm-6 col-xs-3 text-right now-value-name">
+									<div class="col-lg-4 col-md-4 col-sm-6 col-xs-4 text-right now-value-name">
 										<span>Wind</span>
 									</div>
-									<div class="col-lg-8 col-md-8 col-sm-6 col-xs-9 text-left now-value-value">
+									<div class="col-lg-8 col-md-8 col-sm-6 col-xs-8 text-left now-value-value">
 										<span class="label label-default" id="dataField-windSpeed" data-bind="text: airSpeed"></span>
 										<span class="now-value-units" data-bind="text: airSpeedUnits"></span>
 										<span id="dataField-windDirxn" data-bind="text: airDirxn"></span>
@@ -191,21 +162,27 @@
 										<span class="label label-default" id="dataField-dusk" data-bind="text: sunsetText"></span>
 									</div>
 								</div>
+								<div class="row now-value-row">
+										<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">&nbsp;</div>
+									</div>
 							</div><!-- end current conditions fluid subcontainer -->
 						</div>
 						<!-- END Current Values Table -->
 					
 						<!-- BEGIN Current Zone Display -->
 						<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 text-center center-block">
-							<h2 id="zoneColTitle">Zone</h2>
+							<h2 id="zoneColTitle" class="white">Zone</h2>
 							<div class="container-fluid" id="zone-data-container">
 								<div class="row">
 									<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 										<span class="label label-default" id="dataField-zone"
-											data-bind="{ text: zoneDisplay, style: { 'background-color': zoneColor } }">
+											data-bind="{ html: zoneDisplay, style: { 'background-color': zoneColor } }">
 										</span>
 									</div>
 								</div>
+								<div class="row">
+										<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">&nbsp;</div>
+									</div>
 								<div class="row">
 									<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 										<span class="label label-warning" id="dataField-daylight"
@@ -223,7 +200,7 @@
 					
 						<!-- BEGIN Safety Values Table -->
 						<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 text-center">
-							<h2>Safety Rules</h2>
+							<h2 class="white">Safety Rules</h2>
 							<div class="container-fluid" id="rules-data-container">
 								<!-- shell types -->
 								<div class="row rules-value-row">
@@ -279,11 +256,6 @@
 					</div>
 					<!--  END Current Conditions & Rules Row -->
 					
-					<!-- BEGIN Footnote for zone 6
-					<div class="row bottom-border" id="footnoteRow" data-bind="visible: footnoteVisible">
-						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" data-bind="html: footnoteHtml"></div>
-					</div>
-						 END footnote for zone 6 -->
 					
 					<!-- BEGIN Recent Conditions Graph Row -->
 					
@@ -298,8 +270,12 @@
 					 
 					<!-- END Recent Conditions Graph Row -->
 
+					<div class="row text-center center-block" id="graphRow" data-bind="visible: graphEnabled">
+						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center center-block">&nbsp;</div>
+					</div>
+
 					<!-- BEGIN Data attribution section -->
-					<div class="row text-center bottom-border" id="attributionRow">
+					<div class="row text-center" id="attributionRow">
 						<div class="col-lg-1 col-md-4 col-sm-4 col-xs-12 text-center">
 							<h4 class="attributionHeader">Data from:</h4>
 						</div>
@@ -354,10 +330,8 @@
 					<!-- BEGIN copyright row -->
 					<div class="row" id="copyrightRow">
 						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
-							<span>© 2018 by Maxwell Garber</span><br />
-							<span>This site is intended for use only by staff, members, and guests of Three Rivers Rowing Association.</span><br />
-							<span>It is not intended to be a substitute for evaluating safety conditions using good judgement,<br />
-								and therefore assumes no liability if you do something stupid and/or dangerous.</span>
+							<span>&copy; 2018 by Maxwell Garber</span><br />
+							<span>This site is intended for use only by staff, members, and guests of Three Rivers Rowing Association. It is not intended to be a substitute for evaluating safety conditions using good judgement, and therefore assumes no liability if you do something stupid and/or dangerous.</span>
 						</div>
 					</div>
 					<!-- END copyright row -->

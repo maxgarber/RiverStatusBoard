@@ -145,7 +145,7 @@ var AppViewModel = function () {
 		let zone = this.zone();
 		if (zone > 6) {
 			// show prohibited
-			return 'X';
+			return '\u2715'; //'✕';
 		} else {
 			return zone;
 		}
@@ -159,7 +159,7 @@ var AppViewModel = function () {
 	
 	this.footnoteVisible = ko.computed(function () {
 		let zone = this.zone();
-		return (zone > 5);
+		return (zone == 6);
 	}, this);
 	
 	this.footnoteHtml = ko.computed(function () {
@@ -168,9 +168,9 @@ var AppViewModel = function () {
 		
 		let addendum = trra_safety.rowing.matrix.addenda[2];
 		var html = "";
-		html += '<h4 class="footnoteHeader">' + addendum.title + '</h4>';
+		html += '<h4 class="footnoteHeader white">' + addendum.title + '</h4>';
 		for (var i = 1; i < addendum.count; i++) {
-			var sp = '<p class="footnote"><strong>[' + i + ']</strong> &nbsp;' + addendum[i] + '</p><br />';
+			var sp = '<p class="footnote white"><strong>[' + i + ']</strong> &nbsp;' + addendum[i] + '</p><br />';
 			html += sp + '\n';
 		}
 		return html;
@@ -227,7 +227,7 @@ var AppViewModel = function () {
 		var launchToShellRatio = '';
 		// if we are in zone 2 because of daylight, we use zone 3 launch:shell ratio
 		if (zone == 2 && this.daylight()) {
-			launchToShellRatio += trra_safety.rowing.matrix.launchToShellRatio[zone] + ' [Zone 3 Rule]';
+			launchToShellRatio += trra_safety.rowing.matrix.launchToShellRatio[3] + ' [Zone 3 Rule]';
 		} else {
 			launchToShellRatio += trra_safety.rowing.matrix.launchToShellRatio[zone];
 		}

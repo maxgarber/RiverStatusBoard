@@ -14,6 +14,12 @@ html {
 body {
 	color: #ffffff;
 	text-shadow: 0 0 5px #444444;
+	max-width: 100%;
+	overflow-x: scroll;
+}
+
+.white {
+	color: #ffffff;
 }
 
 /*	Content Layout	*/
@@ -28,7 +34,7 @@ body {
 	
 	width: auto;
 	height: auto;
-	min-width: 360px;
+	min-width: 320px;
 	min-height: 480px;
 }
 
@@ -94,14 +100,6 @@ body {
 
 #graphRow {
 	color: #ffffff;
-}
-
-.graph-data-container {
-	width: 80vw;
-	min-width: 33em;
-	height: 35vw;
-	min-height: 25em;
-	padding: auto;
 }
 
 #attributionRow {
@@ -206,11 +204,14 @@ span.dataNote > a:hover {
 	padding-right: 0.3em;
 	padding-top: 0;
 	padding-bottom: 0.05em;
+	border: 1pt solid white;
 }
 
 #dataField-daylight {
 	font-size: 1em;
 	border: 1px solid #0f0f0f;
+	position: relative;
+	top: -2em;
 }
 
 /*	Current Rules' Styles	*/
@@ -248,11 +249,24 @@ span.dataNote > a:hover {
 #graph-data-container {
 	padding-bottom: 5em;
 	overflow-x: scroll;
+	max-width: 100%;
+}
+
+.graph-data-container {
+	/*width: 80vw;*/
+	min-width: 25%;
+	height: 35vw;
+	min-height: 20em;
+	padding: auto;
 }
 
 #graphCanvas {
 	height: 15em;
-	max-width: 110em;
+	max-width: 90vw;
+	margin-left: 0;
+	margin-right: 0;
+	padding-left: 0;
+	padding-right: 0;
 }
 
 /*	Display Customization	*/
