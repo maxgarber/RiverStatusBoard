@@ -86,7 +86,7 @@ var AppViewModel = function () {
 	}, this);
 	
 	this.daylight = ko.computed(function() {
-		if (moment != null) {
+		if (moment != null && this.sunrise() != this._initString && this.sunset() != this._initString) {
 			var now = moment();
 			var afterDawn = now.isAfter(this.sunrise());
 			var beforeDusk = now.isBefore(this.sunset());
