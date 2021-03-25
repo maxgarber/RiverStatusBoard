@@ -257,7 +257,7 @@ var parseFlowAndFloodData = function (data) {
 	}
 	moments.forecast = [];
 	abscissa.forecast = [];
-	for(i = 0; i < forecastDataN; i++) {
+	for(var i = 0; i < forecastDataN; i++) {
 		var datum = $(forecastData).get(i);
 		var datetime = $(datum).children('valid').text();
 		//datetime = datetime.substr(0,16);
@@ -289,7 +289,7 @@ var parseTemperatureData = function (data) {
 	// extract timeseries data
 	var observedData = $(data.documentElement).children('wml2\\:observationMember').find('wml2\\:point')
 	var observedDataN = observedData.length;
-	for(i = 0; i < observedDataN; i++) {
+	for(var i = 0; i < observedDataN; i++) {
 		var datum = $(observedData).get(i);
 		var datetime = $(datum).find('wml2\\:time').text();
 		var temp = $(datum).find('wml2\\:value').text();

@@ -163,7 +163,7 @@ div.row h2 {
 	padding-left: 0.4em;
 	padding-right: 0.4em;
 	margin-right: 0;
-	text-shadow 0 0 0.1em black;
+	text-shadow: 0 0 0.1em black;
 }
 
 span.now-value-units {
@@ -217,7 +217,7 @@ span.dataNote > a:hover {
 /*	Current Rules' Styles	*/
 
 #rules-data-container {
-	padding-top: 1em;
+	/* padding-top: 1em; */
 	padding-right: 2em;
 }
 
@@ -231,11 +231,11 @@ span.dataNote > a:hover {
 }
 
 .rules-value-name > span {
-	font-size: 1.25em;
+	font-size: 1.33em;
 }
 
 .rules-value-value {
-	font-size: 1.25em;
+	font-size: 1.33em;
 	padding-left: 0;
 }
 
@@ -254,6 +254,7 @@ span.dataNote > a:hover {
 
 .graph-data-container {
 	/*width: 80vw;*/
+	text-align: center;
 	min-width: 25%;
 	height: 35vw;
 	min-height: 20em;
@@ -262,11 +263,12 @@ span.dataNote > a:hover {
 
 #graphCanvas {
 	height: 15em;
-	max-width: 90vw;
+	width: 0;
+	/* max-width: 90vw; */
 	margin-left: 0;
 	margin-right: 0;
-	padding-left: 0;
-	padding-right: 0;
+	padding-left: 5em;
+	padding-right: 5em;
 }
 
 /*	Display Customization	*/

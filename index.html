@@ -37,7 +37,7 @@
 		<script src="./scripts/apiConcierge.js"></script>
 		
 		<!-- TRRA dashbaord functions -->
-		<script src="./scripts/safety-matrix-2021.js"></script>
+		<script src="./scripts/safety-matrix.js"></script>
 		
 		<!-- the app itself -->
 		<script src="./scripts/app.js"></script>
@@ -65,7 +65,7 @@
 					<div class="row bottom-border" id="titleRow">
 						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
 							<h1 class="white">Allegheny River Conditions</h1>
-							<h2 class="red">NOTE: THIS IS NOT UPDATED WITH THE 2019 SAFETY MATRIX</h2>
+							<h5><i>now updated with the 2021 safety matrix</i></h5>
 						</div>
 					</div>
 					<!-- END Title Row -->
@@ -209,7 +209,7 @@
 										<span class="label label-info">Shell Types</span>
 									</div>
 									<div class="col-lg-8 col-md-6 col-sm-8 col-xs-12 text-left rules-value-value">
-										<span id="dataField-shells" data-bind="text: shellTypes"></span>
+										<span id="dataField-shells" data-bind="html: shellTypes"></span>
 									</div>
 								</div>
 								<!-- crew skill level -->
@@ -218,7 +218,7 @@
 										<span class="label label-info">Skill Level</span>
 									</div>
 									<div class="col-lg-8 col-md-6 col-sm-8 col-xs-12 text-left rules-value-value">
-										<span id="dataField-skill"  data-bind="text: crewSkill"></span>
+										<span id="dataField-skill"  data-bind="html: crewSkill"></span>
 									</div>
 								</div>
 								<!-- coaches' launch:shell ratio -->
@@ -227,7 +227,7 @@
 										<span class="label label-info">Launches</span>
 									</div>
 									<div class="col-lg-8 col-md-6 col-sm-8 col-xs-12 text-left rules-value-value">
-										<span id="dataField-launches" data-bind="text: launchRatio"></span>
+										<span id="dataField-launches" data-bind="html: launchRatio"></span>
 									</div>
 								</div>
 								<!-- coach certification -->
@@ -236,7 +236,7 @@
 										<span class="label label-info">Coaches</span>
 									</div>
 									<div class="col-lg-8 col-md-6 col-sm-8 col-xs-12 text-left rules-value-value">
-										<span id="dataField-coaches" data-bind="text: coachCert"></span>
+										<span id="dataField-coaches" data-bind="html: coachCert"></span>
 									</div>
 								</div>
 								<!-- safety gear/equipment -->
@@ -245,9 +245,9 @@
 										<span class="label label-info">Safety Gear</span>
 									</div>
 									<div class="col-lg-8 col-md-6 col-sm-8 col-xs-12 text-left rules-value-value">
-										<span id="dataField-pdfReq" data-bind="text: pfdReq"></span><br />
-										<span id="dataField-commsEquip"  data-bind="text: commsEquip"></span><br />
-										<span id="dataField-safetyExtras"  data-bind="text: additionalSafety"></span>
+										<span id="dataField-pdfReq" data-bind="html: pfdReq"></span><br />
+										<span id="dataField-commsEquip"  data-bind="html: commsEquip"></span><br />
+										<span id="dataField-safetyExtras"  data-bind="html: additionalSafety"></span>
 									</div>
 								</div>
 							</div>
@@ -261,10 +261,10 @@
 					<!-- BEGIN Recent Conditions Graph Row -->
 					
 					<div class="row text-center center-block" id="graphRow" data-bind="visible: graphEnabled">
-						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center center-block">
+						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
 							<h2>Recent Conditions</h2>
-							<div class="graph-data-container text-center center-block">
-								<canvas id="graphCanvas" class="center-block"></canvas>
+							<div class="graph-data-container center-block">
+								<canvas id="graphCanvas"></canvas>
 							</div>
 						</div>
 					</div>

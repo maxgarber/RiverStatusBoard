@@ -42,6 +42,7 @@ let main = function () {
 window.onload = function () {
 	main();
 	window.vm.update();
+	window.vm.toggleAttribution();
 }
 
 // EOF
