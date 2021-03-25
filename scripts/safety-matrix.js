@@ -1,13 +1,126 @@
-//		RiverStatusBoard: Information for Rowers and Paddlers
-//		Allegheny River information for Three Rivers Rowing Association (TRRA)
-//		by Maxwell B Garber <max.garber+dev@gmail.com>
-//		trra-safety.js created on 2017-06-26
+//
 
+/// # 2021 TRRA Safety Matrix Rules
 
-//	utility functions
+const kZONE_ROWING_NOT_PERMITTED = Infinity;
+const kZONE_ROWING_INDETERMINATE = NaN;
 
-//	rank returns the zone for a value, given a scale
-//	TODO: add parameters for L/R inclusivity -- and/or make interval dependent
+function _zoneForConditions(waterFlow_kcfs, waterTemp_degF, isDaylight) {
+    if (
+        !isFinite(waterTemp_degF) ||
+        !isFinite(waterFlow_kcfs) ||
+        isDaylight == undefined
+    ) { 
+        return kZONE_ROWING_INDETERMINATE
+    }
+
+    var leastRestrictiveZoneForWaterTemp = kZONE_ROWING_INDETERMINATE;
+    var leastRestrictiveZoneForWaterFlow = kZONE_ROWING_INDETERMINATE;
+    
+    if (-999.0 < waterTemp_degF && waterTemp_degF <= 32.0) {
+        // re-think nonsense water temperature values (in both extrema)
+        leastRestrictiveZoneForWaterFlow = kZONE_ROWING_NOT_PERMITTED;
+    } else if (32.0 < waterTemp_degF && waterTemp_degF < 50.0) {
+        leastRestrictiveZoneForWaterTemp = 3;
+    } else if (50.0 < waterTemp_degF) {
+        leastRestrictiveZoneForWaterTemp = 1;
+    } else {
+        leastRestrictiveZoneForWaterTemp = kZONE_ROWING_INDETERMINATE;
+    }
+    
+    if (0 <= waterFlow_kcfs && waterFlow_kcfs < 30.0) {
+        leastRestrictiveZoneForWaterFlow = 1;
+    } else if (30.0 <= waterFlow_kcfs && waterFlow_kcfs < 40.0) {
+        leastRestrictiveZoneForWaterFlow = 2;
+    } else if (40.0 <= waterFlow_kcfs && waterFlow_kcfs < 45.0) {
+        leastRestrictiveZoneForWaterFlow = 3;
+    } else if (45.0 <= waterFlow_kcfs && waterFlow_kcfs < 50.0) {
+        leastRestrictiveZoneForWaterFlow = 4;
+    } else if (50.0 <= waterFlow_kcfs && waterFlow_kcfs <= 60.0) {
+        leastRestrictiveZoneForWaterFlow = 5;
+    } else if (60.0 < waterFlow_kcfs) {
+        leastRestrictiveZoneForWaterFlow = kZONE_ROWING_NOT_PERMITTED;
+    } else {
+        leastRestrictiveZoneForWaterFlow = kZONE_ROWING_INDETERMINATE;
+    }
+    
+    var zoneForAllConditions = kZONE_ROWING_INDETERMINATE;
+    if (leastRestrictiveZoneForWaterFlow == kZONE_ROWING_NOT_PERMITTED || leastRestrictiveZoneForWaterTemp == kZONE_ROWING_NOT_PERMITTED) {
+        zoneForAllConditions = kZONE_ROWING_NOT_PERMITTED;
+    } else {
+        // NB: if either condition is indeterminate (NaN), then Math.max() returns NaN (indeterminate)
+        zoneForAllConditions = Math.max(leastRestrictiveZoneForWaterTemp, leastRestrictiveZoneForWaterFlow);
+    }
+    
+    // Zone 5 Daylight requirement
+    if (!isDaylight && zoneForAllConditions == 5) {
+        zoneForAllConditions = kZONE_ROWING_NOT_PERMITTED;
+    }
+
+    return zoneForAllConditions;
+}
+
+// This does caching -- but will have difficulty if zoneForConditions returns indeterminate…
+var zoneCache_lastUsedWaterFlow;
+var zoneCache_lastUsedWaterTemp;
+var zoneCache_lastUsedIsDaylight;
+var zoneCache_cachedZoneValue;
+function getZoneForConditions(waterFlow_kcfs, waterTemp_degF, isDaylight) {
+    // Do we need to re-calculate it?
+    if (zoneCache_cachedZoneValue == undefined ||
+        waterFlow_kcfs != zoneCache_lastUsedWaterFlow ||
+        waterTemp_degF != zoneCache_lastUsedWaterTemp ||
+        isDaylight != zoneCache_lastUsedIsDaylight
+    ) {
+        zoneCache_cachedZoneValue = _zoneForConditions(waterFlow_kcfs, waterTemp_degF, isDaylight);
+        zoneCache_lastUsedWaterFlow = waterFlow_kcfs;
+        zoneCache_lastUsedWaterTemp = waterTemp_degF;
+        zoneCache_lastUsedIsDaylight = isDaylight;
+    }
+    return zoneCache_cachedZoneValue;
+}
+
+function allowedShellTypesForConditions(waterFlow_kcfs, waterTemp_degF, isDaylight) {
+    let zone = getZoneForConditions(waterFlow_kcfs, waterTemp_degF, isDaylight);
+    var allowedBoats = ""
+    if (zone == 1) {
+        allowedBoats = "All boats";
+    } else if (zone == 2) {
+        allowedBoats = "Racing shells: All types\nAdaptive shells: PR3 2x only";
+    } else if (zone == 3) {
+        allowedBoats = "8+, 4+, 4x";
+        if (waterFlow_kcfs < 40.0) { allowedBoats += ", 2x"; }
+    } else if (zone == 4) {
+        allowedBoats = "8+, 4+, 4x";
+    } else if (zone == 5) {
+        allowedBoats = "8+, 4x";
+    }
+
+    return allowedBoats;
+}
+
+function launchToShellRatioForConditions(waterFlow_kcfs, waterTemp_degF, isDaylight) {
+    let zone = getZoneForConditions(waterFlow_kcfs, waterTemp_degF, isDaylight);
+}
+
+function racingAllowedForConditions(waterFlow_kcfs, waterTemp_degF, isDaylight) {
+    let zone = getZoneForConditions(waterFlow_kcfs, waterTemp_degF, isDaylight);
+}
+
+function pfdRequirementForConditions(waterFlow_kcfs, waterTemp_degF, isDaylight) {
+    let zone = getZoneForConditions(waterFlow_kcfs, waterTemp_degF, isDaylight);
+}
+
+function crewSkillRequirementForConditions(waterFlow_kcfs, waterTemp_degF, isDaylight) {
+    let zone = getZoneForConditions(waterFlow_kcfs, waterTemp_degF, isDaylight);
+}
+
+function commsRequirementForConditions(waterFlow_kcfs, waterTemp_degF, isDaylight) {
+    let zone = getZoneForConditions(waterFlow_kcfs, waterTemp_degF, isDaylight);
+}
+
+/// # 2019 Implementation
+
 let rank = function (value, scale) {
 	var r = 0;	// initialize at invalid/below all zones
 	for (z = 1; z <= scale.zoneCount; z++) {
@@ -23,11 +136,6 @@ let rank = function (value, scale) {
 	return r;
 };
 
-//	determines if it is currently daylight
-let daylight = function (sunrise, sunset) {
-	// check if sunruse, sunset are moment objects?
-};
-
 let semanticColors = {
 	1: '#00c020',		//	green
 	2: '#40fe00',		//	bright green
@@ -39,32 +147,6 @@ let semanticColors = {
 };
 
 var trra_safety = {
-	
-	//	utility functions
-	
-	//	rank returns the zone for a value, given a scale
-	//	TODO: add parameters for L/R inclusivity -- and/or make interval dependent
-	rank: function (value, scale) {
-		var r = 0;	// initialize at invalid/below all zones
-		for (z = 1; z <= scale.zoneCount; z++) {
-			if ( value >= scale[z].min && value <= scale[z].max ) {
-				r = z;
-				break;
-			}
-		}
-		if (value > scale[scale.zoneCount].max) {
-			//	if we're beyond all defined zones
-			r = scale.zoneCount + 1;
-		}
-		return r;
-	},
-	
-	//	determines if it is currently daylight
-	daylight: function (sunrise, sunset) {
-		// check if sunruse, sunset are moment objects?
-	},
-	
-	//	fixed-oarlock craft
 	rowing: {
 		//	scales define zone ranges for condition parameters in ascending order
 		scales: {
@@ -193,20 +275,16 @@ var trra_safety = {
 	
 		//	primary duty function
 		zoneForConditions: function (waterFlow, waterTemp, sunrise, sunset) {
-			let flowZone = rank(waterFlow, this.scales.waterFlow);
-			let tempZone = rank(waterTemp, this.scales.waterTemp);
-			let zone = Math.max(flowZone, tempZone);
-			
-			// move this into proper place later -> utils.js?	// + TODO: fix sunrise-sunset API yielding sunrise for tomorrow
+            var isDaylight = false;
 			if (moment != null) {
 				var now = moment();
 				var afterDawn = now.isAfter(sunrise);
 				var beforeDusk = now.isBefore(sunset);
-				if ( (afterDawn && beforeDusk) && (zone > 1 && zone < 6) ) {
-					zone -= 1;
-				}
+                isDaylight = (afterDawn && beforeDusk);
 			}
-			return zone;
+            let tempF = 32.0 + ((9/5) * Number(waterTemp));
+            var zoneFor2021Matrix = getZoneForConditions(Number(waterFlow), tempF, isDaylight);
+			return zoneFor2021Matrix;
 		},
 		
 		zoneColorForWaterFlow: function (waterFlow) {
@@ -231,25 +309,5 @@ var trra_safety = {
 			}
 		}
 		
-	},
-	
-	//	NOT YET IMPLEMENTED
-	//	kayaking, paddleboarding, etc.
-	paddling: {
-		
-		//	scales define zone ranges for condition parameters
-		scales: {},
-		
-		//	static data from safety matrix
-		matrix: {},
-		
-		//	primary duty function
-		zoneForConditions: function () {
-			
-		}
-	},
-
-	
+	}
 };
-
-// EOF
