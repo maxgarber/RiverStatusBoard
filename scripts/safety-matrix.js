@@ -22,7 +22,7 @@ function _zoneForConditions(waterFlow_kcfs, waterTemp_degF, isDaylight) {
         leastRestrictiveZoneForWaterFlow = kZONE_ROWING_NOT_PERMITTED;
     } else if (32.0 < waterTemp_degF && waterTemp_degF < 50.0) {
         leastRestrictiveZoneForWaterTemp = 3;
-    } else if (50.0 < waterTemp_degF) {
+    } else if (50.0 <= waterTemp_degF) {
         leastRestrictiveZoneForWaterTemp = 1;
     } else {
         leastRestrictiveZoneForWaterTemp = kZONE_ROWING_INDETERMINATE;
