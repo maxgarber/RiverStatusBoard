@@ -16,7 +16,7 @@ var gov_usgs = {
 		url: 'https://waterservices.usgs.gov/nwis/iv',
 		params: {
 			format: 'json',			// 'waterml,2.0' is old style
-			sites: '03049640',
+			sites: '04230650',//TODO, changeme
 			parameterCd: '00010',
 			siteStatus: 'all'/*,
 			startDT: '',			// need to restore for timeseries fetch

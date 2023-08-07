@@ -41,16 +41,16 @@ let selectors = {
 	currentTemp: '#temp'
 };
 
-let flowAndFloodSourceURI = "https://water.weather.gov/ahps2/hydrograph_to_xml.php?gage=shrp1&output=xml&time_zone=edt";
+let flowAndFloodSourceURI = "https://water.weather.gov/ahps2/hydrograph_to_xml.php?gage=blbn6&output=xml&time_zone=edt";//CHAMGEME
 let temperatureSourceURI = "https://waterservices.usgs.gov/nwis/iv/";
 let flowAndFloodParameters = {
-	gage: 'shrp1',
+	gage: 'blbn6',//CHANGEME
 	output: 'xml'
 };
 
 let temperatureParameters = {
 	format: 'waterml,2.0',
-	sites: '03049640',
+	sites: '04230650',//TODO: changeme
 	startDT: '',		// literal example '2017-04-12T15:00-0000'	@NOTE these get overwritten in flow/flood callback
 	endDT: '',			// literal example '2017-04-14T01:30-0000'
 	parameterCd: '00010',

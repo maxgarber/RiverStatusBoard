@@ -16,8 +16,8 @@ var org_sunrise_sunset = {
 	api: {
 		url: 'https://api.sunrise-sunset.org/json',
 		params: {
-			lat: 40.466846,
-			lng: -79.976543,
+			lat: 43.064251,//CHANGEME
+			lng: -77.699065,//CHAMGEME
 			date: moment().format('YYYY-MM-DD'),
 			formatted: 0
 		}
