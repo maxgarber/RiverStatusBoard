@@ -50,7 +50,7 @@ let flowAndFloodParameters = {
 
 let temperatureParameters = {
 	format: 'waterml,2.0',
-	sites: '04230650',//TODO: changeme
+	sites: '04231600',//TODO: changeme
 	startDT: '',		// literal example '2017-04-12T15:00-0000'	@NOTE these get overwritten in flow/flood callback
 	endDT: '',			// literal example '2017-04-14T01:30-0000'
 	parameterCd: '00010',
