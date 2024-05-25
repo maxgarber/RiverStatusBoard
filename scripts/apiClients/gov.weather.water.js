@@ -2,7 +2,7 @@
 //		Allegheny River information for Three Rivers Rowing Association (TRRA)
 //		by Maxwell B Garber <max.garber+dev@gmail.com>
 //		gov.weather.js created on 2017-06-26
-
+//		Patched to use NOAA's NWPS instead of AHPS on 2024-05-25
 
 var gov_weather_water = {
 	
@@ -43,25 +43,17 @@ var gov_weather_water = {
 		
 		let asyncContext = gov_weather_water;
 		
-		$.ajax({
-			url: asyncContext.api.url, 
-			data: asyncContext.api.params, 
-			datatype: asyncContext.api.params.format,
-			success: function (data, textStatus, jqXHR) {
-				
-				// get from data -- XPaths?
-				var datum = $(data).find('observed > datum:first');
-				var flowUnits = $(datum).find('secondary').attr('units');
-				var flowValue = $(datum).find('secondary').text();
-				flowUnits = asyncContext.unitsFormatter('flow', flowUnits);
-				flowValue = asyncContext.valueFormatter('flow', flowValue);
-				
-				let apiData = "" + flowValue /*+ " " + flowUnits*/;
-				
-				// TODO: update the cached data
-				setterFunc(apiData);
-			}//end-success
-		});//end-$.ajax
+		async function getCurrentWaterData() {
+			let baseURL = "https://api.water.noaa.gov/nwps/v1";
+			let requestURL = baseURL + '/gauges/SHRP1';
+			let response = await fetch(requestURL);
+			let data = response.json();
+			return data;
+		}
+		
+		getCurrentWaterData().then((data) => {
+			setterFunc(data.status.observed.secondary);
+		});
 		
 	},//end-getWaterFlow
 	
@@ -79,25 +71,17 @@ var gov_weather_water = {
 		
 		let asyncContext = gov_weather_water;
 		
-		$.ajax({
-			url: asyncContext.api.url, 
-			data: asyncContext.api.params, 
-			datatype: asyncContext.api.params.format,
-			success: function (data, textStatus, jqXHR) {
-				
-				// get from data
-				var datum = $(data).find('observed > datum:first');
-				var floodUnits = $(datum).find('primary').attr('units');
-				var floodValue = $(datum).find('primary').text();
-				floodUnits = asyncContext.unitsFormatter('level', floodUnits);
-				floodValue = asyncContext.valueFormatter('level', floodValue);
-				
-				let apiData = "" + floodValue /*+ " " + floodUnits*/;
-				
-				// TODO: update the cached data
-				setterFunc(apiData);
-			}//end-success
-		});//end-$.ajax
+		async function getCurrentWaterData() {
+			let baseURL = "https://api.water.noaa.gov/nwps/v1";
+			let requestURL = baseURL + '/gauges/SHRP1';
+			let response = await fetch(requestURL);
+			let data = response.json();
+			return data;
+		}
+		
+		getCurrentWaterData().then((data) => {
+			setterFunc(data.status.observed.primary);
+		});
 		
 	},//end-getWaterLevel
 	
